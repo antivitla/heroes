@@ -1,0 +1,337 @@
+import {
+  recognizeTexts,
+  simpleParseRecognizedData } from './utils.recognize.js';
+import {
+  getLatestMessage,
+  getRemoteCards,
+  getRemoteImages,
+  ifMessageHasMediaPhoto } from './actions.telegram.js';
+import { clone, slug, equal, formatDate, debounce } from './utils.common.js';
+import {
+  downloadImage,
+  copyFile,
+  saveJsonDocument,
+  getJsonDocument } from './utils.resource.js';
+import MixinCommon from './mixin.common.js';
+import ComponentNavigation from './component.navigation.js';
+import ComponentTelegramMessage from './component.telegram-message.js';
+import ComponentFieldCheck from './component.field.check.js';
+import ComponentActions from './component.actions.js';
+import ComponentSearchTelegram from './component.search-telegram.js';
+
+export default {
+  template: `
+    <section class="resource">
+      <header>
+        <h2>Статистика уничтожения противника</h2>
+      </header>
+
+      <!-- Навигация по карточкам -->
+      <component-navigation
+        :items="cards"
+        :stat="stat"
+        :loading="loading"
+        @navigate="navigateCardsByAction">
+      </component-navigation>
+
+      <component-actions
+        v-if="editCardsActions.length"
+        :actions="editCardsActions"
+        :action-result="actionResult"
+        @action="onEditCardsAction">
+      </component-actions>
+
+      <!-- Сохраненные картинки -->
+      <div class="stat-items">
+        <p
+          v-for="item in editCards"
+          style="font-size: small; white-space: pre-line;">
+            <strong>{{ item.date }}:</strong><br>
+            <span>{{ item }}</span>
+        </p>
+      </div>
+
+      <!-- Поиск карточек -->
+      <component-search-telegram
+        :channel="channel"
+        @result="searchResults"></component-search-telegram>
+
+<!--       <component-search
+        v-model="searchCardsQuery"
+        field-label="Поиск сообщений"
+        :label="searchChannelByQueryNextRate ? 'Продолжить поиск' : 'Поиск'"
+        @search="onSearchCards"></component-search> -->
+
+      <!-- Карточки -->
+      <ul class="cards">
+        <li class="card" v-for="card in filteredCardsList" :key="card.id">
+
+          <div style="display: flex">
+            <!-- Действия -->
+            <component-actions
+              v-if="cardActions.length"
+              :actions="cardActions"
+              @action="onAction($event, {
+                card: card,
+                type: cardStatType[card.id]
+              })">
+            </component-actions>
+            <input
+              type="text"
+              placeholder="Тип"
+              v-model="cardStatType[card.id]"
+              @input="saveRecentCardStatType($event.target.value)"
+              style="margin: 1.125rem 0 1.125rem 1rem; width: 3rem;">
+          </div>
+
+          <!-- Просмотр карточек -->
+          <component-telegram-message
+            :card="card"
+            :channel="channel">
+          </component-telegram-message>
+
+        </li>
+      </ul>
+
+      <!-- Навигация по карточкам -->
+      <component-navigation
+        :items="cards"
+        :stat="stat"
+        :loading="loading"
+        @navigate="navigateCardsByAction">
+      </component-navigation>
+    </section>
+  `,
+  components: {
+    ComponentNavigation,
+    ComponentTelegramMessage,
+    // ComponentFieldCheck,
+    ComponentActions,
+    ComponentSearchTelegram,
+  },
+  mixins: [MixinCommon],
+  data () {
+    return {
+      channel: 'zvezdanews',
+      // selectedCards: {},
+      cardActions: [
+        { type: 'take-stat', label: 'Взять статистику' },
+      ],
+      editCardsActions: [
+        { type: 'recognize', label: 'Распознать' },
+        { type: 'parse', label: 'Очеловечить' }
+      ],
+      cards: { list: [] },
+      editCards: [],
+      cardStatType: {},
+      recentCardStatType: 1,
+      actionResult: '',
+    };
+  },
+  watch: {
+    filteredCardsList: {
+      handler () {
+        this.filteredCardsList.forEach(card => {
+          this.cardStatType[card.id] = this.cardStatType[card.id] || this.recentCardStatType;
+        });
+      },
+      deep: true
+    }
+  },
+  computed: {
+    filteredCardsList () {
+      return this.cards.list.filter(card => {
+        return card.photo && typeof card.photo === 'string';
+      });
+    }
+  },
+  async created () {
+    await this.init();
+  },
+  methods: {
+    async init () {
+      this.loading = true;
+      await this.getStat();
+      await this.getCachedCards();
+      await this.getCachedEditCards();
+      if (!this.cards.list.length) {
+        await this.navigateCardsByIndex(this.cards.from || 13650);
+      }
+      this.loading = false;
+    },
+    async navigateCardsByAction (type) {
+      switch (type) {
+        case 'first':
+          await this.navigateCardsByIndex(0);
+          break;
+        case 'previous':
+          await this.navigateCardsByIndex(this.cards.from - this.cards.limit);
+          break;
+        case 'current':
+          await this.navigateCardsByIndex(this.cards.from);
+          break;
+        case 'next':
+          await this.navigateCardsByIndex(this.cards.from + this.cards.limit);
+          break;
+        case 'last':
+          await this.navigateCardsByIndex(this.stat.total - this.cards.limit);
+          break;
+      }
+    },
+    async navigateCardsByIndex (index) {
+      this.loading = true;
+      await this.getRemoteCards(index);
+      this.loading = false;
+    },
+    async getRemoteCards (from) {
+      this.loading = true;
+      this.cards = await getRemoteCards(this.channel, {
+        from,
+        limit: 20
+      });
+      await this.getRemoteImages();
+      await this.setCachedCards();
+      await this.refreshStat();
+      this.loading = false;
+    },
+    async getRemoteImages () {
+      this.imageProgress = this.cards.list.reduce((images, message) => {
+        if (ifMessageHasMediaPhoto(message)) {
+          images[message.id] = true;
+        }
+        return images;
+      }, {});
+      await getRemoteImages({
+        list: this.cards.list,
+        callback: ({ index, url, base64, error }) => {
+          if (error) {
+            alert(`Ошибка с картинкой сообщения номер ${this.cards.list[index].id}: ${error.message}`);
+          }
+          // (Разрушить Telegram-объект, чтоб смочь изменить его)
+          this.cards.list[index] = {
+            ...this.cards.list[index],
+            photo: (url || base64 || error),
+          };
+          delete this.cards.list[index].media;
+          delete this.cards.list[index].originalArgs;
+          this.imageProgress[this.cards.list[index].id] = false;
+        }
+      });
+    },
+    async refreshStat () {
+      this.loading = true;
+      await this.getStat();
+      const latestMessage = await getLatestMessage(this.channel);
+      this.stat.total = latestMessage.id;
+      await this.setStat();
+      this.loading = false;
+    },
+    async actionDownloadPhoto (cardId, type) {
+      const card = this.cards.list.find(card => {
+        return Number(card.id) === Number(cardId);
+      });
+      if (card && card.photo && typeof card.photo === 'string' && !this.isSavedImage(card.photo)) {
+        this.loading = true;
+        const filename = `stat-${type}-id-${cardId}-${this.channel}.jpg`;
+        const saveTo = `${this.resourceCachePath}/images/${filename}`;
+        await downloadImage(card.photo, saveTo);
+        card.photo = saveTo;
+        this.loading = false;
+      }
+    },
+    async getCachedEditCards () {
+      this.editCards = await getJsonDocument(
+        `${this.resourceCachePath}/edit-cards.json`,
+        []
+      );
+    },
+    async setCachedEditCards () {
+      await saveJsonDocument(
+        `${this.resourceCachePath}/edit-cards.json`,
+        this.editCards
+      );
+    },
+
+    //
+    // Actions
+    //
+
+    onAction (action, { card, type }) {
+      return ({
+        'take-stat': this.actionTakeStat,
+      })[action](card, Number(type));
+    },
+    onEditCardsAction (action) {
+      return ({
+        'recognize': this.actionRecognizeStat,
+        'parse': this.actionParseRecognized,
+      })[action]();
+    },
+    async actionTakeStat (card, type) {
+      await this.actionDownloadPhoto(card.id, type);
+      const date = formatDate(card.date * 1000, 'YYYY-MM-DD');
+      this.editCards[date] = { type, date, photo: card.photo }
+      await this.setCachedEditCards();
+    },
+    async actionRecognizeStat () {
+      const total = Object.values(this.editCards)
+        .filter(card => !card.recognized)
+        .length;
+      const count = 0;
+      this.actionResult = `Распознано ${count}/${total}`;
+      for (let key in this.editCards) {
+        if (!this.editCards[key].recognized) {
+          this.editCards[key].recognized = await recognizeTexts({
+            list: [this.editCards[key]],
+            keys: ['photo'],
+            callback: ({ index }) => {
+              this.actionResult = `Распознано ${count}/${total}`;
+            }
+          });
+          await this.setCachedEditCards();
+        }
+      }
+    },
+    async actionParseRecognized () {
+      for (let key in this.editCards) {
+        if (this.editCards[key].recognized) {
+          this.editCards[key].parsed = simpleParseRecognizedData(
+            this.editCards[key].recognized.parsed[0].value
+          ).toLowerCase();
+          delete this.editCards[key].recognized;
+        }
+      }
+      for (let key in this.editCards) {
+        this.editCards[key].parsed = this.editCards[key].parsed
+          .replace(/\n\n/gi, '\n')
+          .split('\n')
+          .filter(line => {
+            return !line.match(/состоянию/gi) && !line.match(/уничтожено/gi);
+          })
+          .join('\n');
+        this.editCards[key].numbers = this.editCards[key].parsed.match(/(\d+)/g);
+        this.editCards[key].texts = this.editCards[key].parsed
+          .split('\n')
+          .filter(line => {
+            return !line.match(/\d+/g);
+          });
+
+        if (this.editCards[key].texts.length !== this.editCards[key].numbers.length) {
+          console.error(this.editCards[key]);
+        } else {
+          this.editCards[key].entries = this.editCards[key].numbers.map((n, i) => {
+            return [
+              this.editCards[key].texts[i],
+              n
+            ];
+          });
+        }
+      }
+      await this.setCachedEditCards();
+      this.actionResult = `Очеловечено`;
+    },
+    saveRecentCardStatType (type) {
+      this.recentCardStatType = type ? Number(type) : 1;
+    }
+  }
+}

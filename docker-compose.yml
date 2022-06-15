@@ -1,0 +1,20 @@
+services:
+  nginx:
+    image: nginx
+    container_name: general_nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./:/src
+      - ./host/nginx/site.conf:/etc/nginx/conf.d/site.conf
+      - ./host/cert/local.crt:/etc/nginx/fullchain.pem
+      - ./host/cert/local.key:/etc/nginx/privkey.pem
+    links:
+      - php
+
+  php:
+    image: php:7-fpm
+    container_name: general_php
+    volumes:
+      - ./:/src

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Герои Z</title>
+  <script src="assets/parse-remote-data-utils.js"></script>
+  <script src="assets/parse-heroes-z.js"></script>
+  <!-- <script src="assets/parse-warheroes.js"></script> -->
+  <style>
+    .loading {
+      display: none;
+    }
+    .loading.in-progress {
+      display: block;
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      max-width: 50rem;
+    }
+
+    .media-left + .media-right {
+      margin-left: 2rem;
+    }
+
+    .hero + .hero {
+      margin-top: 4rem;
+    }
+
+    .hero img {
+      border-radius: 20px;
+      filter: contrast(1.25);
+      height: 240px;
+    }
+
+    .hero .header {
+      margin: 1rem 0 1.25rem 0;
+    }
+
+    .hero .header .name {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    .hero .header .title {
+      font-size: 1.25rem;
+      font-style: italic;
+      margin: 0;
+    }
+
+    .hero .header .name + .title {
+      margin-top: 0.5rem;
+    }
+
+    .hero .group {
+      font-style: italic;
+    }
+
+    .hero .description {
+      /*max-height: 9rem;*/
+      /*overflow: hidden;*/
+    }
+
+    .hero .description p:first-child {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Герои Z</h2>
+    <div>
+      <p>
+        <button id="action-diff-heroes" class="action">Проверить новых героев</button>
+        &ensp;
+        <span class="diff-log"></span>
+      </p>
+      <p>
+        <button id="action-update-heroes" class="action" style="display: none;">Загрузить новых героев</button>
+        &ensp;
+        <span class="update-log"></span>
+      </p>
+    </div>
+  </header>
+  <main id="heroes"></main>
+  <script>
+    (function () {
+      'use strict';
+
+      ParseRemoteDataUtils.getFromUrl('data/heroes-z.json', { json: true }).then(data => {
+        const target = document.getElementById('heroes');
+        data.list.reverse().forEach(hero => {
+          const heroElement = document.createElement('div');
+          heroElement.classList.add('hero');
+          heroElement.innerHTML = `
+            <div class="media-left">
+              <img src="${hero.image}">
+            </div>
+            <div class="media-right">
+              <div class="header">
+                <h3 class="name">${hero.name}</h3>
+                <p class="title">${hero.title}</p>
+              </div>
+              ${hero.group ? `<p class="group">(+ ${hero.group.join(', ')})</p>` : ''}
+              <div class="description">
+                <p>${hero.description.split('\n\n').join('</p><p>')}</p>
+              </div>
+            </div>
+          `;
+          target.append(heroElement);
+        });
+      });
+
+      // UI Actions
+      document.addEventListener('click', event => {
+        if (event.target.closest('#action-update-heroes')) {
+          ParseZHeroesUtils.defaultUpdate();
+        }
+        else if (event.target.closest('#action-diff-heroes')) {
+          const diffLogElement = document.querySelector('.diff-log');
+          const updateActionElement = document.querySelector('#action-update-heroes')
+          diffLogElement.textContent = 'Проверяем...';
+          ParseZHeroesUtils.checkDiff().then(diff => {
+            if (diff) {
+              diffLogElement.textContent = `Новых героев: ${diff}`;
+              updateActionElement.style.display = '';
+            } else {
+              diffLogElement.textContent = 'Нет новых';
+              updateActionElement.style.display = 'none';
+            }
+          }).catch(error => {
+            if (error.message.match(/no changes/)) {
+              diffLogElement.textContent = 'Нет новых';
+            }
+          });
+        }
+      });
+
+      // UI Progress
+      document.addEventListener('progress', event => {
+        console.log('(Progress)', event.detail.message);
+        // const progress = document.querySelector('.progress');
+        // if (event.detail.message === 'Done') {
+        //   progress.style.display = 'none';
+        // } else {
+        //   progress.style.display = '';
+        // }
+        // document.querySelector('.progress').textContent = event.detail.message;
+      });
+
+    }());
+  </script>
+</body>
+</html>

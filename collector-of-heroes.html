@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Собиратель героев</title>
+  <link href="assets/collector/styles.css" rel="stylesheet">
+  <script src="assets/lib/uuidv1.min.js"></script>
+  <script src="assets/lib/vue3.js"></script>
+  <script src="assets/lib/d3@7.js"></script>
+  <script src="assets/lib/telegram.js"></script>
+</head>
+<body>
+
+  <header>
+    <h1>Собиратель героев</h1>
+    <p>Инструмент сбора и подготовки информации о героях специальной военной операции&nbsp;Z в формате JSON с доступом к ней любому желающему. Результат будет в <a href="data/heroes.json" target="_blank">data/heroes.json</a></p>
+  </header>
+
+  <p>Формат хранилища:</p>
+
+  <ul>
+    <li>Временные файлы работы загрузки и обработки данных &mdash; группировка по источнику (например, Cайт Минобороны z.mil.ru, Телеграм канал "Работаем, брат!", Сайт warheroes, Википедия/Megabook, и т.д.) в <strong>data/sources/*</strong></li>
+    <li>Финальный результат сборки в <strong>data/heroes.json</strong> с картинками в <strong>data/images/*</strong>.</li>
+  </ul>
+
+  <main id="app">
+    <component-selector :tabs="resource.tabs" v-model="resource.current"></component-selector>
+
+    <keep-alive>
+      <component
+        :is="currentResourceComponent"
+        :resource-key="resource.current"
+        :heroes="heroes"
+        :channel="currentResourceChannel"
+        :channel-title="currentResourceChannelTitle"
+        @create-hero="createHero"
+        @update-heroes="updateHeroes"
+      ></component>
+    </keep-alive>
+
+    <component-modals :modals="modals" @close="closeModal"></component-modals>
+  </main>
+
+  <script type="module">
+    import { getJsonDocument, saveJsonDocument } from './assets/collector/utils.resource.js';
+    import ComponentSelector from './assets/collector/component.selector.js';
+    import ComponentModals from './assets/collector/component.modals.js';
+
+    import ComponentResourceZmil from './assets/collector/component.resource.zmil.js';
+    import ComponentResourceWarheroes from './assets/collector/component.resource.warheroes.js';
+    import ComponentResourceTsargrad from './assets/collector/component.resource.tsargrad.js';
+    import ComponentResourceKontingent from './assets/collector/component.resource.kontingent.js';
+    import ComponentResourceTelegram from './assets/collector/component.resource.telegram.js';
+
+    import ComponentResourceHeroes from './assets/collector/component.resource.heroes.js';
+    import ComponentResourceBriefings from './assets/collector/component.resource.briefings.js';
+    import ComponentResourceAwards from './assets/collector/component.resource.awards.js';
+
+    const app = Vue.createApp({
+      components: {
+        ComponentSelector,
+        ComponentModals,
+        ComponentResourceZmil,
+        ComponentResourceWarheroes,
+        ComponentResourceTsargrad,
+        ComponentResourceKontingent,
+        ComponentResourceTelegram,
+        ComponentResourceHeroes,
+        ComponentResourceBriefings,
+        ComponentResourceAwards,
+      },
+      data () {
+        return {
+          resource: {
+            tabs: [
+              { key: 'zmil', label: 'Герои Z', sublabel: 'z.mil.ru' },
+              { key: 'warheroes', label: 'Герои России', sublabel: 'warheroes.ru' },
+              { key: 'tsargrad', label: 'Наши герои', sublabel: 'ug.tsargrad.tv' },
+              { key: 'kontingent', label: 'Герои Z', sublabel: 'kontingent.press' },
+              { key: 'telegram.rabotaembrat', label: 'Работаем, Брат! 🇷🇺', sublabel: '@rabotaembrat' },
+              { key: 'telegram.zakharprilepin', label: 'Захар Прилепин', sublabel: '@zakharprilepin' },
+              { key: 'telegram.mod_russia', label: 'Минобороны России', sublabel: '@mod_russia' },
+              { key: 'briefings', label: 'Брифинги', sublabel: 'z.mil.ru', group: 'right' },
+              // Специальные
+              // { key: 'awards', label: 'Награды', sublabel: 'wikipedia.org', group: 'right' },
+              { key: 'heroes', label: 'Проверка', sublabel: 'heroes.json', group: 'right' }
+            ],
+            current: location.hash.replace('#', '') || 'zmil'
+          },
+          heroes: {},
+          modals: [],
+        };
+      },
+      provide () {
+        return {
+          confirm: this.openConfirm
+        };
+      },
+      watch: {
+        'resource.current' (value) {
+          location.hash = value;
+        },
+      },
+      computed: {
+        currentResourceComponent () {
+          return `component-resource-${this.resource.current.split(/\./)[0]}`;
+        },
+        currentResourceChannel () {
+          return this.resource.current.split(/\./)[1];
+        },
+        currentResourceChannelTitle () {
+          return this.resource.tabs.find(tab => this.resource.current === tab.key).label;
+        },
+      },
+      async created () {
+        await this.getHeroes();
+      },
+      methods: {
+        async getHeroes () {
+          this.heroes = await getJsonDocument('data/heroes.json');
+        },
+        async saveHeroes () {
+          await saveJsonDocument('data/heroes.json', this.heroes);
+        },
+        async createHero (name) {
+          if (this.heroes[name]) {
+            alert('Уже есть такой герой');
+            return;
+          }
+          this.heroes[name] = { name };
+          await this.saveHeroes();
+        },
+        async updateHeroes (heroes) {
+          Object.keys(heroes).forEach(name => {
+            if (!this.heroes[name]) {
+              this.heroes[name] = { name };
+            }
+            Object.assign(this.heroes[name], heroes[name]);
+          });
+          await this.saveHeroes();
+        },
+
+        // Modals
+
+        async openConfirm ({ body, header } = {}) {
+          return this.openModal({ type: 'confirm', body, header });
+        },
+        async openModal ({ type, body, header } = {}) {
+          return new Promise((resolve, reject) => {
+            this.modals.push({ type, body, header, resolve, reject });
+          });
+        },
+        closeModal () {
+          this.modals.pop();
+        }
+      }
+    }).mount('#app');
+  </script>
+
+</body>
+</html>
