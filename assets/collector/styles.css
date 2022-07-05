@@ -1050,6 +1050,13 @@ input[type="button"].field-action {
   box-shadow: var(--box-shadow-white-outline);
 }
 
+.check-hero__avatar.md {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  box-shadow: var(--box-shadow-white-outline);
+}
+
 .check-hero__poster img {
   display: block;
   box-shadow: var(--box-shadow-white-outline);

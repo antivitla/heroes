@@ -409,6 +409,7 @@ export default {
       this.cards.to = to || (this.cards.from + this.cards.limit);
       this.cards.list = this.allCards.slice(this.cards.from, this.cards.to);
       this.actionRecognizeHeroNames();
+      await this.clearEditHeroes();
       await this.syncEditHeroes();
       await this.setCachedEditHeroes();
       await this.setCachedCards();

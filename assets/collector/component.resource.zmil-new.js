@@ -26,6 +26,7 @@ import ComponentNavigation from './component.navigation.js';
 import ComponentEditor from './component.editor.js';
 import ComponentActions from './component.actions.js';
 import ComponentFieldPreviewAwards from './component.field.preview-awards.js';
+import ComponentSearch from './component.search.js';
 
 export default {
   template: `
@@ -58,9 +59,14 @@ export default {
         :action-result="actionResult"
         @action="doGlobalAction"></component-actions>
 
+      <component-search
+        v-model="searchHeroesQuery"
+        label="Найти"
+        @search="onSearchHeroes"></component-search>
+
       <!-- Карточки -->
       <ul class="cards">
-        <li v-for="card in cards.list" class="card" :key="card.id">
+        <li v-for="card in (filteredHeroList.length ? filteredHeroList : cards.list)" class="card" :key="card.id">
 
           <fieldset class="field-image" :class="{ saved: isSavedImage(card.photo) }">
             <img :src="card.photo" width="100%">
@@ -150,10 +156,14 @@ export default {
     ComponentEditor,
     ComponentActions,
     ComponentFieldPreviewAwards,
+    ComponentSearch,
   },
   mixins: [MixinCommon],
   data () {
     return {
+      searchHeroesQuery: '',
+      filteredHeroList: [],
+      searchHeroTimeout: null,
       globalActions: [
         // { type: 'add-id', label: '(Опасно) Добавить ID' }
         { type: 'clear-edit-heroes', label: 'Очистить кэш редактирования' },
@@ -178,6 +188,13 @@ export default {
         { key: 'url', mode: 'edit', type: 'input', label: 'Ссылка' },
       ],
     };
+  },
+  watch: {
+    searchHeroesQuery () {
+      if (this.searchHeroesQuery.length > 2) {
+        this.onSearchHeroes();
+      }
+    }
   },
   methods: {
     async getRemoteAllCards () {
@@ -277,7 +294,10 @@ export default {
           }]
         };
         this.$emit('update-heroes', update);
-        this.editHeroes[card.id] = clone(update.list[0]);
+        this.editHeroes[card.id] = Object.assign(
+          clone(update.list[0]),
+          clone(update.list[0].resources.zmil)
+        );
         this.cardHeroId[card.id] = card.id;
         await this.setCachedEditHeroes();
         this.actionsLog[card.id] = 'Готово';
@@ -285,6 +305,22 @@ export default {
         console.error(error);
         this.actionsLog[card.id] = error.message;
       }
+    },
+    async onSearchHeroes () {
+      clearTimeout(this.searchHeroTimeout);
+      this.searchHeroTimeout = setTimeout(async () => {
+        this.cards.list = this.allCards.filter(card => {
+          return JSON.stringify(card).toLowerCase().match(
+            new RegExp(this.searchHeroesQuery.toLowerCase()),
+            'gi'
+          );
+        });
+        this.actionRecognizeHeroNames();
+        await this.clearEditHeroes();
+        await this.syncEditHeroes();
+        await this.setCachedEditHeroes();
+        await this.setCachedCards();
+      }, 500);
     },
     async doGlobalAction (action) {
       return ({

@@ -53,9 +53,13 @@ export default {
         <ul class="cards">
           <li class="card check-hero" v-for="hero in filteredHeroList" :key="hero.name">
 
+
+
             <component-preview-awards v-model="hero.awards"></component-preview-awards>
 
             <h3 class="check-hero__name">{{ hero.name }}</h3>
+
+            <!--
             <p class="check-hero__rank">{{ hero.rank }}</p>
             <p class="check-hero__sex">{{ capitalizeFirstLetter(hero.sex) }}</p>
             <p
@@ -63,15 +67,19 @@ export default {
               class="check-hero__group">{{ hero.group.join(', ') }}</p>
             <p v-if="hero.fallen">🔥 Погиб{{ hero.sex === 'женщина' ? 'ла' : ''}}</p>
 
+            -->
+
             <!-- Аватары -->
             <div class="check-hero__avatars">
               <div
-                class="check-hero__avatar"
+                class="check-hero__avatar md"
                 v-for="resource in getSources(hero)"
                 :style="safeGetAvatarStyle(hero.resources[resource].photo)"></div>
             </div>
 
             <!-- Переключатель ресурсов -->
+
+            <!--
             <div class="actions">
               <input
                 type="button"
@@ -98,6 +106,8 @@ export default {
                 </p>
               </div>
             </div>
+
+            -->
           </li>
         </ul>
       </section>
