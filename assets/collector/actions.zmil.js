@@ -1,4 +1,5 @@
 import { getHtmlBodyFragmentFromUrl } from './utils.resource.js';
+import { capitalizeFirstLetter } from './utils.common.js';
 
 export async function getRemoteAllCards () {
   const baseUrl = 'https://z.mil.ru:443';
@@ -12,10 +13,18 @@ export async function getRemoteAllCards () {
     // Сформировать первичную карточку
     const photo = `${baseUrl}/${node.querySelector('img').getAttribute('src')}`;
     const poster = `${baseUrl}/${node.getAttribute('href')}`;
-    cards.push({ name, photo, poster });
+    cards.push({
+      name,
+      photo,
+      poster,
+      url: poster,
+      id: photo
+    });
     return cards;
   }, []);
 }
+
+// Брифинги
 
 export async function getRemoteBriefings () {
   // https://z.mil.ru/spec_mil_oper/brief/briefings.htm?f=1&fid=0&blk=12411803&objInBlock=50
@@ -56,4 +65,44 @@ export async function getRemoteBriefing (url) {
     bodyFragment.querySelectorAll('#content #center h1 ~ p[style]')
   ).map(element => element.textContent.trim()).join('\n\n');
   return article;
+}
+
+// Новые герои
+
+export async function getRemoteNewCards () {
+  // https://z.mil.ru/spec_mil_oper/heroes_z.htm?objInBlock=40&f=41&blk=12426247
+  const baseUrl = 'https://z.mil.ru';
+  const limit = 50;
+  let offset = 0;
+  let done = false;
+  let elements = [];
+  while (!done) {
+    const params = new URLSearchParams({
+      f: offset + 1,
+      blk: 12426247,
+      objInBlock: limit
+    }).toString();
+    const bodyFragment = await getHtmlBodyFragmentFromUrl(
+      `${baseUrl}/spec_mil_oper/heroes_z.htm?${params}`
+    );
+    const nodes = bodyFragment.querySelectorAll('.newsitem2');
+    if (!nodes.length) {
+      done = true;
+    } else {
+      elements = elements.concat(Array.prototype.slice.call(nodes));
+      offset += limit;
+    }
+  }
+  return elements.map(element => {
+    const photo = `${baseUrl}/${element.querySelector('img')?.getAttribute('src') || ''}`;
+    const name = element.querySelectorAll('a')[photo ? 1 : 0]?.textContent
+      .trim().replace('ё', 'е') || '';
+    const rank = capitalizeFirstLetter(element.textContent.replace(name, '').trim() || '');
+    const url = `${baseUrl}/${element.querySelector('a').getAttribute('href') || ''}`;
+    return { name, rank, photo, url, id: url }
+  });
+}
+
+export async function getRemoteNewCard (url) {
+  //
 }

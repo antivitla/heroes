@@ -28,7 +28,7 @@ export default {
       <section>
         <h3>Cтатистика и ошибки</h3>
         <component-hero-stat
-          :heroes="heroes"
+          :heroes-list="heroesList"
           :sources="sources"
           @filter-heroes="onFilterHeroes"></component-hero-stat>
       </section>
@@ -130,6 +130,8 @@ export default {
       // },
       formatDate,
       techOperations: [
+        { type: 'rename-mod-russia', label: 'Переименовать mod_russia в telegram.mod-russia'},
+        { type: 'add-ancestor-id', label: 'Добавить ID в ancestor'},
         // { type: 'move-to-zmil-fields', label: 'Убрать в zmil поля' },
         // { type: 'move-to-resources', label: 'Убрать в resources' },
       ],
@@ -143,10 +145,10 @@ export default {
         'kontingent',
         'ancestor',
         'mod_russia',
-        // 'rabotaembrat',
-        // 'zakharprilepin',
+        'rabotaembrat',
+        'zakharprilepin',
       ],
-      fields: {
+      heroFields: {
         common: [
           'name',
           'rank',
@@ -157,7 +159,6 @@ export default {
         ],
       },
       typesMix: [],
-      // combinations: [],
       statResult: '',
     };
   },
@@ -165,30 +166,26 @@ export default {
     //
   },
   watch: {
-    heroes () {
-      // if (this.combinations.length === 0) {
-      //   this.combinations = this.getCombinations();
-      // }
-      this.filteredHeroList = this.heroList.slice();
-    },
     searchHeroesQuery () {
       this.onSearchHeroes();
     }
   },
   created () {
-    // this.combinations = this.getCombinations();
-    this.filteredHeroList = this.heroList.slice();
+    this.filteredHeroList = this.heroesList.slice();
   },
   methods: {
     async onTechOperation (type) {
       return await ({
-        // 'move-to-zmil-fields': this.actionMoveToZMilFields,
-        // 'move-to-resources': this.actionMoveToResources,
+        'add-ancestor-id': this.actionAddAncestorId,
+        'rename-mod-russia': this.renameModRussia,
       })[type]();
+    },
+    syncEditHeroes () {
+      //
     },
     onFilterHeroes (types) {
       this.typesMix = types;
-      this.filteredHeroList = this.heroList.filter(hero => {
+      this.filteredHeroList = this.heroesList.filter(hero => {
         return types.reduce((result, type) => {
           return result && hero.resources?.[type];
         }, true);
@@ -197,7 +194,7 @@ export default {
     async onSearchHeroes () {
       clearTimeout(this.searchHeroTimeout);
       this.searchHeroTimeout = setTimeout(() => {
-        this.filteredHeroList = this.heroList.filter(hero => {
+        this.filteredHeroList = this.heroesList.filter(hero => {
           return JSON.stringify(hero).toLowerCase().match(
             new RegExp(this.searchHeroesQuery.toLowerCase()),
             'gi'
@@ -214,73 +211,41 @@ export default {
     getSources (hero) {
       return this.sources.filter(src => hero.resources?.[src]);
     },
-    // getCombinations () {
-    //   const combinations = possibleCombinations(this.sources);
-    //   return combinations.filter((types, index) => {
-    //     return this.heroList.filter(hero => {
-    //       return types.reduce((result, type) => {
-    //         return result && hero.resources?.[type];
-    //       }, true);
-    //     }).length > 0;
-    //   });
-    // },
     safeGetAvatarStyle (photo) {
       const style = this.getAvatarStyle(photo);
       if (!photo) {
         style.display = 'none';
       }
       return style;
+    },
+
+    //
+    // Actions
+    //
+
+    async actionAddAncestorId () {
+      this.actionResult = '';
+      const list = await getJsonDocument('data/heroes-list.json', {});
+      list.forEach(hero => {
+        if (hero.resources.ancestor) {
+          hero.resources.ancestor.id = hero.resources.ancestor.url;
+        }
+      });
+      await saveJsonDocument('data/heroes-list.json', list);
+      this.actionResult = 'Добавлено';
+    },
+    async renameModRussia () {
+      this.actionResult = '';
+      const list = await getJsonDocument('data/heroes-list.json', {});
+      list.forEach(hero => {
+        const mod_russia = hero.resources.mod_russia;
+        if (mod_russia) {
+          delete hero.resources.mod_russia;
+          hero.resources['telegram.mod_russia'] = mod_russia;
+        }
+      });
+      await saveJsonDocument('data/heroes-list.json', list);
+      this.actionResult = 'Переименовали';
     }
-    // async actionMoveToResources () {
-    //   this.actionResult = '';
-    //   const heroes = await getJsonDocument('data/heroes.json', {});
-    //   const updatedHeroes = Object.values(heroes).reduce((map, hero) => {
-    //     map[hero.name] = { resources: {} };
-    //     for (let field in hero) {
-    //       if (this.fields.common.includes(field)) {
-    //         map[hero.name][field] = hero[field];
-    //       } else {
-    //         map[hero.name].resources[field] = hero[field];
-    //       }
-    //     }
-    //     return map;
-    //   }, {});
-    //   await saveJsonDocument('data/heroes.json', updatedHeroes);
-    //   this.actionResult = 'Преобразовано';
-    // },
-    // async actionMoveToZMilFields () {
-    //   this.actionResult = '';
-    //   const heroes = await getJsonDocument('data/heroes.json', {});
-    //   const updatedHeroes = Object.values(heroes).reduce((map, hero) => {
-    //     map[hero.name] = {
-    //       name: hero.name,
-    //       rank: hero.rank || '',
-    //       fallen: Boolean(hero.fallen),
-    //       awards: hero.awards?.slice() || [],
-    //       sex: hero.sex || 'мужчина',
-    //       group: hero.group?.slice() || [],
-    //     };
-    //     // Перенос данных
-    //     if (hero.poster) {
-    //       map[hero.name].zmil = {
-    //         photo: '',
-    //         poster: hero.poster,
-    //         story: '',
-    //         date: '',
-    //         url: ''
-    //       };
-    //     }
-    //     if (hero.ancestorStory) {
-    //       map[hero.name].ancestor = {
-    //         poster: hero.ancestorPoster,
-    //         story: hero.ancestorStory,
-    //         url: '',
-    //       };
-    //     }
-    //     return map;
-    //   }, {});
-    //   await saveJsonDocument('data/heroes.json', updatedHeroes);
-    //   this.actionResult = 'Перенесено в Zmil-поля';
-    // }
   }
 }

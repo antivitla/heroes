@@ -15,7 +15,12 @@ export default {
       <div class="input-block">
         <select v-model="editField" :class="{ muted: !editField }">
           <option value="" disabled>(Выбрать)</option>
-          <option v-for="option in options" :value="option">{{ option }}</option>
+          <template v-for="(option, index) in options">
+            <option
+              v-if="index > 0 && option.group !== options[index - 1].group"
+              disabled>{{ delimiter }}</option>
+            <option :value="option.value">{{ option.label }}</option>
+          </template>
         </select>
       </div>
     </fieldset>
@@ -26,5 +31,5 @@ export default {
       type: String,
       default: ''
     },
-  }
+  },
 }

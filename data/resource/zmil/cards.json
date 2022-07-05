@@ -1,27 +1,14 @@
 {
-  "from": 320,
+  "from": 380,
   "limit": 10,
-  "to": 330,
+  "to": 390,
   "list": [
     {
-      "name": "Сергей Ртищев",
-      "photo": "https://z.mil.ru:443/images/rtishev-07.06.2022-170.jpg",
-      "poster": "https://z.mil.ru:443/images/rtishev-07.06.2022-932.jpg"
-    },
-    {
-      "name": "Александр Бояршин",
-      "photo": "https://z.mil.ru:443/images/08.06.22_boarhin_170.jpg",
-      "poster": "https://z.mil.ru:443/images/08.06.22_boarhin_932.jpg"
-    },
-    {
-      "name": "Григорий Гершень",
-      "photo": "https://z.mil.ru:443/images/08.06.22_gerhen_170.jpg",
-      "poster": "https://z.mil.ru:443/images/08.06.22_gerhen_932.jpg"
-    },
-    {
-      "name": "Сергей Большаков",
-      "photo": "https://z.mil.ru:443/images/08.06.22_bolhakov_170.jpg",
-      "poster": "https://z.mil.ru:443/images/08.06.22_bolhakov_932.jpg"
+      "name": "Евгений Пахомкин",
+      "photo": "https://z.mil.ru:443/images/27.06.22_pahomkin_170.jpg",
+      "poster": "https://z.mil.ru:443/images/27.06.22_pahomkin_932.jpg",
+      "url": "https://z.mil.ru:443/images/27.06.22_pahomkin_932.jpg",
+      "id": "https://z.mil.ru:443/images/27.06.22_pahomkin_170.jpg"
     }
   ]
 }

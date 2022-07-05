@@ -8,7 +8,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=11835",
     "dateOfBirth": "1936-11-25",
     "dateOfDeath": "2022-01-07",
-    "id": "dereshev-anatoliy-ivanovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=11835",
     "date": "2022-01-07"
   },
   {
@@ -20,7 +20,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=1798",
     "dateOfBirth": "1946-08-15",
     "dateOfDeath": "2022-01-07",
-    "id": "kvashnin-anatoliy-vasilevich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=1798",
     "date": "2022-01-07"
   },
   {
@@ -32,7 +32,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=27945",
     "dateOfBirth": "1933-07-23",
     "dateOfDeath": "2022-01-10",
-    "id": "lesnichaya-ekaterina-porfirevna",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=27945",
     "date": "2022-01-10"
   },
   {
@@ -44,7 +44,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=15939",
     "dateOfBirth": "1929-07-30",
     "dateOfDeath": "2022-01-11",
-    "id": "pugacheva-ekaterina-makarovna",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=15939",
     "date": "2022-01-11"
   },
   {
@@ -56,7 +56,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=26864",
     "dateOfBirth": "1936-02-27",
     "dateOfDeath": "2022-01-11",
-    "id": "sorokina-valentina-vasilevna",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=26864",
     "date": "2022-01-11"
   },
   {
@@ -68,7 +68,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=27505",
     "dateOfBirth": "1935-05-20",
     "dateOfDeath": "2022-01-14",
-    "id": "orudzhev-karib-azizali-ogly",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=27505",
     "date": "2022-01-14"
   },
   {
@@ -80,7 +80,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=25965",
     "dateOfBirth": "1923-10-30",
     "dateOfDeath": "2022-01-19",
-    "id": "paramonova-anna-vasilevna",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=25965",
     "date": "2022-01-19"
   },
   {
@@ -93,8 +93,20 @@
     "dateOfAward": "2022-01-20",
     "dateOfBirth": "1962-01-31",
     "dateOfDeath": "",
-    "id": "miller-aleksey-borisovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=31911",
     "date": "2022-01-20"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Сельское хозяйство: Растениеводство",
+    "name": "Варзаев Александр Павлович",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=15279",
+    "dateOfBirth": "1937-02-17",
+    "dateOfDeath": "2022-01-31",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=15279",
+    "date": "2022-01-31"
   },
   {
     "awards": [
@@ -105,7 +117,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=31263",
     "dateOfBirth": "1926-05-20",
     "dateOfDeath": "2022-01-31",
-    "id": "serebrennikov-vladimir-alekseevich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=31263",
     "date": "2022-01-31"
   },
   {
@@ -117,7 +129,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=20515",
     "dateOfBirth": "1925-12-16",
     "dateOfDeath": "2022-02-13",
-    "id": "zakharov-nikolay-gerasimovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=20515",
     "date": "2022-02-13"
   },
   {
@@ -129,7 +141,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=4713",
     "dateOfBirth": "1944-07-13",
     "dateOfDeath": "2022-02-14",
-    "id": "chirkin-viktor-martynovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=4713",
     "date": "2022-02-14"
   },
   {
@@ -141,7 +153,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=14945",
     "dateOfBirth": "1927-10-06",
     "dateOfDeath": "2022-02-16",
-    "id": "balmont-boris-vladimirovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=14945",
     "date": "2022-02-16"
   },
   {
@@ -153,7 +165,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=27904",
     "dateOfBirth": "1925-03-21",
     "dateOfDeath": "2022-02-16",
-    "id": "garifulina-nurdida-kiyametdinovna",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=27904",
     "date": "2022-02-16"
   },
   {
@@ -165,7 +177,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=20287",
     "dateOfBirth": "1936-03-20",
     "dateOfDeath": "2022-02-20",
-    "id": "mosyagina-raisa-andreevna",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=20287",
     "date": "2022-02-20"
   },
   {
@@ -177,7 +189,19 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32103",
     "dateOfBirth": "1996-09-29",
     "dateOfDeath": "2022-02-24",
-    "id": "gadzhimagomedov-nurmagomed-engelsovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32103",
+    "date": "2022-02-24"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Производство: Радиоэлектронная промышленность",
+    "name": "Щелконогов Иван Васильевич",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=20916",
+    "dateOfBirth": "1937-05-19",
+    "dateOfDeath": "2022-02-24",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=20916",
     "date": "2022-02-24"
   },
   {
@@ -189,7 +213,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32278",
     "dateOfBirth": "1991-12-29",
     "dateOfDeath": "2022-02-26",
-    "id": "zorin-denis-igorevich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32278",
     "date": "2022-02-26"
   },
   {
@@ -201,8 +225,21 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=20847",
     "dateOfBirth": "1925-04-10",
     "dateOfDeath": "2022-02-28",
-    "id": "bogatyrev-ivan-petrovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=20847",
     "date": "2022-02-28"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Армия: Мотострелки",
+    "name": "Гаспарян Андраник Саргисович",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32427",
+    "dateOfAward": "2022-03-03",
+    "dateOfBirth": "1983-09-11",
+    "dateOfDeath": "",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32427",
+    "date": "2022-03-03"
   },
   {
     "awards": [
@@ -213,7 +250,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=15006",
     "dateOfBirth": "1935-08-20",
     "dateOfDeath": "2022-03-03",
-    "id": "antonets-semen-spiridonovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=15006",
     "date": "2022-03-03"
   },
   {
@@ -225,7 +262,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=10317",
     "dateOfBirth": "1924-01-31",
     "dateOfDeath": "2022-03-03",
-    "id": "kustov-ivan-ilich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=10317",
     "date": "2022-03-03"
   },
   {
@@ -238,20 +275,20 @@
     "dateOfAward": "2022-03-04",
     "dateOfBirth": "2022-01-1978",
     "dateOfDeath": "",
-    "id": "berngard-aleksey-borisovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32111",
     "date": "2022-03-04"
   },
   {
     "awards": [
       "Герой Российской Федерации"
     ],
-    "area": "Армия: ВВС",
+    "area": "Армия: Лётчики-истребители",
     "name": "Дудин Виктор Анатольевич",
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32117",
     "dateOfAward": "2022-03-04",
     "dateOfBirth": "",
     "dateOfDeath": "",
-    "id": "dudin-viktor-anatolevich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32117",
     "date": "2022-03-04"
   },
   {
@@ -264,7 +301,7 @@
     "dateOfAward": "2022-03-04",
     "dateOfBirth": "1980-06-04",
     "dateOfDeath": "",
-    "id": "nimchenko-yuriy-petrovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32149",
     "date": "2022-03-04"
   },
   {
@@ -277,7 +314,19 @@
     "dateOfAward": "2022-03-04",
     "dateOfBirth": "1990-01-28",
     "dateOfDeath": "",
-    "id": "pankratov-aleksey-stanislavovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32112",
+    "date": "2022-03-04"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Армия: Мотострелки",
+    "name": "Панов Сергей Александрович",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32283",
+    "dateOfBirth": "1989-05-13",
+    "dateOfDeath": "2022-03-04",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32283",
     "date": "2022-03-04"
   },
   {
@@ -290,19 +339,7 @@
     "dateOfAward": "2022-03-04",
     "dateOfBirth": "2022-01-1995",
     "dateOfDeath": "",
-    "id": "starostin-anton-igorevich",
-    "date": "2022-03-04"
-  },
-  {
-    "awards": [
-      "Герой Российской Федерации"
-    ],
-    "area": "Армия: Мотострелки",
-    "name": "Панов Сергей Александрович",
-    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32283",
-    "dateOfBirth": "1989-03-13",
-    "dateOfDeath": "2022-03-04",
-    "id": "panov-sergey-aleksandrovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32128",
     "date": "2022-03-04"
   },
   {
@@ -314,7 +351,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32116",
     "dateOfBirth": "1993-05-26",
     "dateOfDeath": "2022-03-05",
-    "id": "zhoga-vladimir-artemovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32116",
     "date": "2022-03-05"
   },
   {
@@ -326,7 +363,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32277",
     "dateOfBirth": "1999-09-21",
     "dateOfDeath": "2022-03-07",
-    "id": "gilemkhanov-damir-rashidovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32277",
     "date": "2022-03-07"
   },
   {
@@ -338,7 +375,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32180",
     "dateOfBirth": "1996-10-13",
     "dateOfDeath": "2022-03-07",
-    "id": "islamov-damir-nazirovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32180",
     "date": "2022-03-07"
   },
   {
@@ -350,7 +387,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32273",
     "dateOfBirth": "1990-05-09",
     "dateOfDeath": "2022-03-07",
-    "id": "kurganov-aleksey-sergeevich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32273",
     "date": "2022-03-07"
   },
   {
@@ -362,7 +399,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=7543",
     "dateOfBirth": "1919-10-25",
     "dateOfDeath": "2022-03-07",
-    "id": "astafev-vasiliy-mikhaylovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=7543",
     "date": "2022-03-07"
   },
   {
@@ -374,7 +411,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=30756",
     "dateOfBirth": "2022-01-1932",
     "dateOfDeath": "2022-03-07",
-    "id": "panchenkov-nikolay-kuzmich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=30756",
     "date": "2022-03-07"
   },
   {
@@ -386,7 +423,31 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=31210",
     "dateOfBirth": "1934-09-17",
     "dateOfDeath": "2022-03-08",
-    "id": "bakulin-sergey-vasilevich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=31210",
+    "date": "2022-03-08"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Армия: Мотострелки",
+    "name": "Герасимов Вадим Сергеевич",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32474",
+    "dateOfBirth": "2022-01-1985",
+    "dateOfDeath": "2022-03-08",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32474",
+    "date": "2022-03-08"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Армия: Военная разведка",
+    "name": "Журавлев Борис Борисович",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32504",
+    "dateOfBirth": "1979-01-23",
+    "dateOfDeath": "2022-03-08",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32504",
     "date": "2022-03-08"
   },
   {
@@ -398,7 +459,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32243",
     "dateOfBirth": "1991-03-24",
     "dateOfDeath": "2022-03-12",
-    "id": "zozulin-vladimir-nikolaevich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32243",
     "date": "2022-03-12"
   },
   {
@@ -410,7 +471,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=20659",
     "dateOfBirth": "1924-12-17",
     "dateOfDeath": "2022-03-13",
-    "id": "pokhlebkin-nikolay-ivanovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=20659",
     "date": "2022-03-13"
   },
   {
@@ -422,7 +483,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32172",
     "dateOfBirth": "1981-03-13",
     "dateOfDeath": "2022-03-15",
-    "id": "sukharev-sergey-vladimirovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32172",
     "date": "2022-03-15"
   },
   {
@@ -434,8 +495,20 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32215",
     "dateOfBirth": "1995-10-07",
     "dateOfDeath": "2022-03-17",
-    "id": "peskovoy-maksim-vladimirovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32215",
     "date": "2022-03-17"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Армия: ВДВ",
+    "name": "Ягидаров Денис Сергеевич",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32492",
+    "dateOfBirth": "1984-03-17",
+    "dateOfDeath": "2022-03-23",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32492",
+    "date": "2022-03-23"
   },
   {
     "awards": [
@@ -446,8 +519,33 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32232",
     "dateOfBirth": "1988-05-16",
     "dateOfDeath": "2022-03-24",
-    "id": "kontsov-maksim-andreevich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32232",
     "date": "2022-03-24"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Армия: Морская пехота",
+    "name": "Носов Владимир Николаевич",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32521",
+    "dateOfBirth": "1988-04-14",
+    "dateOfDeath": "2022-03-26",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32521",
+    "date": "2022-03-26"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Армия: ВДВ",
+    "name": "Шикин Максим Игоревич",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32470",
+    "dateOfAward": "2022-03-31",
+    "dateOfBirth": "1993-09-23",
+    "dateOfDeath": "",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32470",
+    "date": "2022-03-31"
   },
   {
     "awards": [
@@ -458,7 +556,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=17936",
     "dateOfBirth": "1929-03-08",
     "dateOfDeath": "2022-04-01",
-    "id": "pereverzeva-nina-vasilevna",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=17936",
     "date": "2022-04-01"
   },
   {
@@ -470,7 +568,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=17791",
     "dateOfBirth": "1928-11-14",
     "dateOfDeath": "2022-04-03",
-    "id": "bokova-khritiniya-alekseevna",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=17791",
     "date": "2022-04-03"
   },
   {
@@ -482,7 +580,19 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=28852",
     "dateOfBirth": "1937-09-26",
     "dateOfDeath": "2022-04-03",
-    "id": "bryzgunov-nikolay-egorovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=28852",
+    "date": "2022-04-03"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Сельское хозяйство: Животноводство",
+    "name": "Лукьянченко Андрей Анисимович",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=17877",
+    "dateOfBirth": "1923-12-21",
+    "dateOfDeath": "2022-04-03",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=17877",
     "date": "2022-04-03"
   },
   {
@@ -494,7 +604,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=15589",
     "dateOfBirth": "1926-04-25",
     "dateOfDeath": "2022-04-03",
-    "id": "sokolov-efrem-evseevich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=15589",
     "date": "2022-04-03"
   },
   {
@@ -507,7 +617,7 @@
     "dateOfAward": "2022-04-04",
     "dateOfBirth": "1969-07-19",
     "dateOfDeath": "",
-    "id": "frolenkov-andrey-anatolevich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32392",
     "date": "2022-04-04"
   },
   {
@@ -519,7 +629,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32394",
     "dateOfBirth": "2000-05-29",
     "dateOfDeath": "2022-04-05",
-    "id": "farshinev-dmitriy-aleksandrovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32394",
     "date": "2022-04-05"
   },
   {
@@ -531,7 +641,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=21258",
     "dateOfBirth": "1942-10-09",
     "dateOfDeath": "2022-04-06",
-    "id": "vasenkov-mikhail-anatolevich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=21258",
     "date": "2022-04-06"
   },
   {
@@ -543,7 +653,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32253",
     "dateOfBirth": "1932-11-16",
     "dateOfDeath": "2022-04-13",
-    "id": "georgioglo-nikolay-nikolaevich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32253",
     "date": "2022-04-13"
   },
   {
@@ -555,7 +665,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=28575",
     "dateOfBirth": "1937-11-17",
     "dateOfDeath": "2022-04-15",
-    "id": "zharkov-nikolay-sergeevich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=28575",
     "date": "2022-04-15"
   },
   {
@@ -567,7 +677,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=12755",
     "dateOfBirth": "1937-08-15",
     "dateOfDeath": "2022-04-15",
-    "id": "karpova-nina-andreevna",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=12755",
     "date": "2022-04-15"
   },
   {
@@ -579,7 +689,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=10599",
     "dateOfBirth": "1922-06-19",
     "dateOfDeath": "2022-04-16",
-    "id": "kuznetsov-aleksandr-mikhaylovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=10599",
     "date": "2022-04-16"
   },
   {
@@ -591,7 +701,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=11120",
     "dateOfBirth": "1944-04-25",
     "dateOfDeath": "2022-04-18",
-    "id": "trubnikov-vyacheslav-ivanovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=11120",
     "date": "2022-04-18"
   },
   {
@@ -603,8 +713,21 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=21115",
     "dateOfBirth": "1938-03-08",
     "dateOfDeath": "2022-04-20",
-    "id": "ummaeva-fazika-khusseynovna",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=21115",
     "date": "2022-04-20"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Армия: Вертолётчики",
+    "name": "Кобец Роман Станиславович",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32554",
+    "dateOfAward": "2022-04-21",
+    "dateOfBirth": "1981-02-11",
+    "dateOfDeath": "",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32554",
+    "date": "2022-04-21"
   },
   {
     "awards": [
@@ -616,7 +739,7 @@
     "dateOfAward": "2022-04-26",
     "dateOfBirth": "1969-09-25",
     "dateOfDeath": "",
-    "id": "delimkhanov-adam-sultanovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32294",
     "date": "2022-04-26"
   },
   {
@@ -629,7 +752,7 @@
     "dateOfAward": "2022-04-29",
     "dateOfBirth": "1932-01-07",
     "dateOfDeath": "",
-    "id": "barmakov-yuriy-nikolaevich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32309",
     "date": "2022-04-29"
   },
   {
@@ -642,7 +765,7 @@
     "dateOfAward": "2022-04-29",
     "dateOfBirth": "1953-01-24",
     "dateOfDeath": "",
-    "id": "bashmet-yuriy-abramovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32321",
     "date": "2022-04-29"
   },
   {
@@ -655,7 +778,7 @@
     "dateOfAward": "2022-04-29",
     "dateOfBirth": "1932-04-29",
     "dateOfDeath": "",
-    "id": "krasnopolskaya-irina-grigorevna",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32315",
     "date": "2022-04-29"
   },
   {
@@ -668,7 +791,7 @@
     "dateOfAward": "2022-04-29",
     "dateOfBirth": "1953-10-08",
     "dateOfDeath": "",
-    "id": "mikhaylov-vladimir-afrikanovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=16950",
     "date": "2022-04-29"
   },
   {
@@ -681,8 +804,20 @@
     "dateOfAward": "2022-04-29",
     "dateOfBirth": "1955-05-30",
     "dateOfDeath": "",
-    "id": "pekarsh-aleksandr-ivanovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32304",
     "date": "2022-04-29"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Армия: Бронетанковые войска",
+    "name": "Шаймарданов Дамир Эдуардович",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32493",
+    "dateOfBirth": "1998-08-02",
+    "dateOfDeath": "2022-04-30",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32493",
+    "date": "2022-04-30"
   },
   {
     "awards": [
@@ -694,7 +829,7 @@
     "dateOfAward": "2022-05-04",
     "dateOfBirth": "1985-07-10",
     "dateOfDeath": "",
-    "id": "vagner-ivan-viktorovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32326",
     "date": "2022-05-04"
   },
   {
@@ -706,19 +841,19 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=18189",
     "dateOfBirth": "1937-05-26",
     "dateOfDeath": "2022-05-06",
-    "id": "logvanev-viktor-mikhaylovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=18189",
     "date": "2022-05-06"
   },
   {
     "awards": [
       "Герой Российской Федерации"
     ],
-    "area": "Армия: ВВС",
+    "area": "Армия: Лётчики-штурмовики",
     "name": "Боташев Канамат Хусеевич",
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32448",
     "dateOfBirth": "1959-05-20",
     "dateOfDeath": "2022-05-22",
-    "id": "botashev-kanamat-khuseevich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32448",
     "date": "2022-05-22"
   },
   {
@@ -730,7 +865,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=784",
     "dateOfBirth": "1925-09-29",
     "dateOfDeath": "2022-05-26",
-    "id": "romanovtsev-sergey-dmitrievich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=784",
     "date": "2022-05-26"
   },
   {
@@ -742,7 +877,7 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=2875",
     "dateOfBirth": "1927-11-14",
     "dateOfDeath": "2022-05-28",
-    "id": "golosov-rudolf-aleksandrovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=2875",
     "date": "2022-05-28"
   },
   {
@@ -754,8 +889,20 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=10362",
     "dateOfBirth": "1926-06-07",
     "dateOfDeath": "2022-06-02",
-    "id": "gaponov-grekhov-andrey-viktorovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=10362",
     "date": "2022-06-02"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Партийные и советские деятели",
+    "name": "Браун Андрей Георгиевич",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=16336",
+    "dateOfBirth": "1937-02-14",
+    "dateOfDeath": "2022-06-04",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=16336",
+    "date": "2022-06-04"
   },
   {
     "awards": [
@@ -766,7 +913,70 @@
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=1317",
     "dateOfBirth": "1939-08-16",
     "dateOfDeath": "2022-06-06",
-    "id": "ryumin-valeriy-viktorovich",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=1317",
     "date": "2022-06-06"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Армия: Мотострелки",
+    "name": "Донгак Мерген Очур оолович",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32535",
+    "dateOfAward": "2022-06-09",
+    "dateOfBirth": "1981-02-23",
+    "dateOfDeath": "",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32535",
+    "date": "2022-06-09"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Армия: Мотострелки",
+    "name": "Цыдыпов Балдан Баирович",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32543",
+    "dateOfAward": "2022-06-11",
+    "dateOfBirth": "1998-05-14",
+    "dateOfDeath": "",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32543",
+    "date": "2022-06-11"
+  },
+  {
+    "awards": [
+      "Герой Труда Российской Федерации"
+    ],
+    "area": "Производство: Оборонная промышленность",
+    "name": "Белобрагин Борис Андреевич",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32494",
+    "dateOfAward": "2022-06-14",
+    "dateOfBirth": "1948-06-27",
+    "dateOfDeath": "",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32494",
+    "date": "2022-06-14"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Армия: ВДВ",
+    "name": "Попов Александр Николаевич",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32545",
+    "dateOfBirth": "1996-06-18",
+    "dateOfDeath": "2022-06-23",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32545",
+    "date": "2022-06-23"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Сельское хозяйство: Растениеводство",
+    "name": "Тихий Эдуард Викентьевич",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=20636",
+    "dateOfBirth": "1931-10-06",
+    "dateOfDeath": "2022-06-27",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=20636",
+    "date": "2022-06-27"
   }
 ]

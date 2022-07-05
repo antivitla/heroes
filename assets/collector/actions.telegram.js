@@ -19,7 +19,7 @@ async function createTelegramClient () {
   const credentials = await fetch('credentials.json').then(response => response.json());
   const client = new TelegramClient(
     new StringSession(credentials.telegram.session || ''),
-    credentials.telegram.apiId,
+    Number(credentials.telegram.apiId),
     credentials.telegram.apiHash,
     { connectionRetries: 5 }
   );

@@ -16,9 +16,6 @@ import ComponentStat from './component.stat.js';
 import ComponentNavigation from './component.navigation.js';
 import ComponentActions from './component.actions.js';
 import ComponentEditor from './component.editor.js';
-import ComponentFieldImage from './component.field.image.js';
-import ComponentFieldTitle from './component.field.title.js';
-import ComponentFieldAvatar from './component.field.avatar.js';
 
 export default {
   template: `
@@ -32,10 +29,9 @@ export default {
 
       <!-- Статистика ресурса -->
       <component-stat
-        :done="stat.done"
         :total="stat.total"
         :loading="loading"
-        @refresh="refreshCards">Собираем статистику...</component-stat>
+        @refresh="refreshAllCards">Собираем статистику...</component-stat>
 
       <!-- Навигация по карточкам-->
       <component-navigation
@@ -52,10 +48,10 @@ export default {
         @action="doAction"></component-actions>
 
       <!-- Карточки -->
-      <ul class="cards">
-        <li class="card" v-for="card in cards.list" :key="card.name">
+      <ul class="cards" v-if="cards.list">
+        <li class="card" v-for="card in cards.list" :key="card.id">
           <component-editor
-            v-model="editHeroes[card.name]"
+            v-model="editHeroes[card.id]"
             :fields="fields"></component-editor>
         </li>
       </ul>
@@ -81,27 +77,24 @@ export default {
     ComponentNavigation,
     ComponentActions,
     ComponentEditor,
-    ComponentFieldImage,
-    ComponentFieldAvatar,
-    ComponentFieldTitle,
   },
   mixins: [MixinCommon],
   data () {
     return {
-      loading: false,
       actions: [
         { type: 'save-images', label: '1. Сохранить картинки' },
         { type: 'recognize-images', label: '2. Распознать постеры' },
         { type: 'recognize-data', label: '3. Дораспознать данные' },
-        { type: 'save-heroes', label: '4. Сохранить героев' }
+        { type: 'save-heroes', label: '4. Сохранить героев' },
+        // { type: 'add-id', label: '(ОПАСНО) Добавить ID' },
       ],
       fields: [
         { key: 'poster', mode: 'view', type: 'image', class: 'field-poster' },
         { key: 'awards', type: 'preview-awards' },
         { key: 'photo', mode: 'view', type: 'avatar' },
         { key: 'name', mode: 'view', type: 'title' },
-        { key: 'awards', mode: 'edit', type: 'multiselect', label: 'Награды', options: Awards.names },
-        { key: 'rank', mode: 'edit', type: 'select', label: 'Звание', options: Ranks.names },
+        { key: 'awards', mode: 'edit', type: 'multiselect', label: 'Награды', options: [] },
+        { key: 'rank', mode: 'edit', type: 'select', label: 'Звание', options: [] },
         { key: 'story', mode: 'edit', type: 'text', label: 'История' },
         { key: 'fallen', mode: 'edit', type: 'check', label: 'Погиб' },
         { key: 'date', mode: 'edit', type: 'date', label: 'Дата' },
@@ -113,89 +106,25 @@ export default {
           ]
         },
       ],
-      allCards: [],
-      editHeroes: {},
     };
   },
-  watch: {
-    editHeroes: {
-      handler () {
-        this.setCachedEditHeroes();
-      },
-      deep: true
-    }
-  },
   computed: {
-    allHeroNames () {
-      return this.allCards.map(card => card.name).sort();
+    selectHeroOptions () {
+      return this.allCards.map(card => {
+        const existingHero = this.getHeroById(card.id);
+        const label = existingHero
+          ? `${existingHero.name}, ${existingHero.rank}, ${card.id}`
+          : `${card.name}, ${card.id}`;
+        return { label, value: card.id };
+      }).sort((a, b) => a.label < b.label ? -1 : a.label === b.label ? 0 : 1);
     },
-  },
-  async created () {
-    await this.init();
-    // Update field options
-    this.fields.filter(field => field.key === 'group')[0].options = this.allHeroNames;
   },
   methods: {
-    async init () {
-      this.loading = true;
-      await this.getCachedAllCards();
-      if (!this.allCards.length) {
-        await this.getRemoteAllCards();
-        await this.setCachedAllCards();
-      }
-      await this.getCachedEditHeroes();
-      await this.getCachedCards();
-      if (!this.cards.to || !this.cards.list.length) {
-        const { from, limit } = this.cards;
-        this.navigateCardsByIndex(from);
-      }
-      this.loading = false;
-    },
-    async refreshCards () {
-      this.loading = true;
-      await this.getRemoteAllCards();
-      await this.setCachedAllCards();
-      this.loading = false;
-    },
-    async getCachedAllCards () {
-      this.allCards = await getJsonDocument(
-        `${this.resourceCachePath}/all-cards.json`,
-        []
-      );
-      await this.getStat();
-      this.stat.total = this.allCards.length;
-      await this.setStat();
-    },
     async getRemoteAllCards () {
       this.allCards = await getRemoteAllCards();
       await this.getStat();
       this.stat.total = this.allCards.length;
       await this.setStat();
-    },
-    async setCachedAllCards () {
-      return saveJsonDocument(
-        `${this.resourceCachePath}/all-cards.json`,
-        this.allCards
-      );
-    },
-    async navigateCardsByAction (action) {
-      switch (action) {
-        case 'first':
-          await this.navigateCardsByIndex(0);
-          break;
-        case 'previous':
-          await this.navigateCardsByIndex(this.cards.from - this.cards.limit);
-          break;
-        case 'current':
-          await this.navigateCardsByIndex(this.cards.from);
-          break;
-        case 'next':
-          await this.navigateCardsByIndex(this.cards.from + this.cards.limit);
-          break;
-        case 'last':
-          await this.navigateCardsByIndex(this.stat.total - this.cards.limit);
-          break;
-      }
     },
     async navigateCardsByIndex(from, to, limit) {
       this.cards.from = from || 0;
@@ -207,21 +136,18 @@ export default {
       await this.setCachedCards();
     },
     syncEditHeroes () {
-      this.isUpdateLocked = true;
-      this.editHeroes = this.cards.list.reduce((editHeroes, card) => {
-        editHeroes[card.name] = Object.assign(
-          {
-            name: card.name,
-            photo: card.photo,
-            poster: card.poster,
-            url: card.poster,
-          },
-          clone(this.heroes[card.name] || {}),
-          clone(this.heroes[card.name]?.resources?.zmil || {})
+      // Наша задача по имеющимся пока что скудным данным - файлы ссылок на картинки
+      // - понять а есть ли уже у нас подобные герои.
+      this.editHeroes = this.cards.list.reduce((editHeroes, { name, photo, poster, url, id }) => {
+        const editHero = { name, photo, poster, url, id };
+        const existingHero = this.getExistingHeroByCard(editHero);
+        editHeroes[editHero.id] = Object.assign(
+          editHero,
+          clone(existingHero || {}),
+          clone(existingHero?.resources?.zmil || {})
         );
         return editHeroes;
-      }, {});
-      this.isUpdateLocked = false;
+      }, this.createInitialEditHeroes());
     },
 
     //
@@ -230,11 +156,23 @@ export default {
 
     async doAction (action) {
       return ({
+        'add-id': this.actionAddId,
         'save-images': this.actionSaveImages,
         'recognize-images': this.actionRecogizePoster,
         'recognize-data': this.actionRecognizeData,
         'save-heroes': this.actionSaveHeroes,
       })[action]();
+    },
+    async actionAddId () {
+      // Загрузить героев, взять все карточки. Пройтись по карточкам
+      // и каждого найденного героя обновить с айди
+      this.allCards.forEach(card => {
+        const existingHero = this.getExistingHeroByCard(card);
+        if (existingHero) {
+          existingHero.resources.zmil.id = card.id;
+        }
+      });
+      return await saveJsonDocument(`data/heroes-list.json`, this.heroesList);
     },
     async actionSaveImages () {
       this.actionResult = '';
@@ -251,8 +189,10 @@ export default {
           list: cardList,
           keys: ['photo', 'poster'],
           callback: ({ index, key, saveTo }) => {
-            const name = cardList[index].name;
-            this.editHeroes[name][key] = saveTo;
+            // const name = cardList[index].name;
+            const id = cardList[index].id;
+            this.editHeroes[id][key] = saveTo;
+            // this.editHeroes[name][key] = saveTo;
             this.progress.done += 1;
           },
           pathSaveTo: 'data/images'
@@ -268,7 +208,7 @@ export default {
       this.actionResult = '';
       // Выбрать карточки с нераспознанными историями
       const heroList = this.cards.list
-        .map(card => this.editHeroes[card.name])
+        .map(card => this.editHeroes[card.id])
         .filter(editHero => !editHero.story);
       if (heroList.length) {
         this.progress.done = 0;
@@ -297,7 +237,7 @@ export default {
     async actionRecognizeData () {
       this.actionResult = '';
       this.cards.list
-        .map(card => this.editHeroes[card.name])
+        .map(card => this.editHeroes[card.id])
         .forEach(editHero => {
           const story = editHero.story;
           // Пробуем распознать звание, если не удалось ранее
@@ -313,7 +253,7 @@ export default {
           // Пробуем награды
           const awards = recognizeAwards(story);
           if (awards.length) {
-            editHero.awards = !editHero.awards.length
+            editHero.awards = !editHero.awards?.length
               ? awards.map(award => award.name)
               : editHero.awards;
           }
@@ -325,27 +265,30 @@ export default {
     },
     async actionSaveHeroes () {
       this.actionResult = '';
-      const update = Object.values(this.editHeroes).reduce((map, hero) => {
-        map[hero.name] = {
-          name: hero.name || '',
-          rank: hero.rank || '',
-          awards: clone(hero.awards?.slice() || []),
-          sex: hero.sex || 'мужчина',
-          fallen: Boolean(hero.fallen),
-          group: clone(hero.group?.slice() || []),
-          resources: Object.assign({}, hero.resources, {
-            zmil: {
-              photo: hero.photo || '',
-              poster: hero.poster || '',
-              story: hero.story || '',
-              date: hero.date || '',
-              url: hero.url || '',
-            }
-          })
-        };
-        return map;
-      }, {});
-      this.$emit('update-heroes', clone(update));
+      const update = {
+        resourceKey: this.resourceKey,
+        list: Object.values(this.editHeroes).map(hero => {
+          return {
+            name: hero.name || '',
+            rank: hero.rank || '',
+            awards: clone(hero.awards?.slice() || []),
+            sex: hero.sex || 'мужчина',
+            fallen: Boolean(hero.fallen),
+            group: clone(hero.group?.slice() || []),
+            resources: clone(Object.assign({}, hero.resources, {
+              zmil: {
+                photo: hero.photo || '',
+                poster: hero.poster || '',
+                story: hero.story || '',
+                date: hero.date || '',
+                url: hero.url || '',
+                id: hero.id || ''
+              }
+            }))
+          };
+        })
+      };
+      this.$emit('update-heroes', update);
       await this.setCachedEditHeroes();
       this.stat.done = this.cards.to;
       await this.setStat();
@@ -353,6 +296,10 @@ export default {
     },
     isSavedImage (imageUrl) {
       return /^data\//.test(imageUrl);
+    },
+    getExistingHeroByCard (card) {
+      const fallbackId = `data/images/${card.photo.split('/').slice(-1)[0]}`;
+      return this.getHeroById(card.id, 'zmil') || this.getHeroById(fallbackId, 'zmil');
     },
   }
 };

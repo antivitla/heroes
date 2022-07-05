@@ -32,7 +32,6 @@ export default {
 
       <!-- Статистика ресурса-->
       <component-stat
-        :done="stat.done"
         :total="stat.total"
         :loading="loading"
         @refresh="refreshStat">Собираем статистику...</component-stat>
@@ -42,12 +41,12 @@ export default {
         :items="cards"
         :stat="stat"
         :loading="loading"
-        @navigate="navigateCardsByAction">
-      </component-navigation>
+        @navigate="navigateCardsByAction"></component-navigation>
 
       <!-- Действия -->
       <component-actions
-        :actions="generalActions"
+        v-if="globalActions.length"
+        :actions="globalActions"
         :action-result="generalActionResult"
         @action="doAction({ action: $event })"></component-actions>
 
@@ -60,10 +59,7 @@ export default {
 
       <!-- Карточки -->
       <ul class="cards">
-        <li
-          class="card"
-          v-for="card in usefulCardsList"
-          :key="card.id">
+        <li class="card" v-for="card in usefulCardsList" :key="card.id">
           <!-- Просмотр карточек -->
           <component-telegram-message
             :card="card"
@@ -74,7 +70,7 @@ export default {
             class="select-hero"
             :class="{
               selected: selectedCard[card.id],
-              recognized: isRecognizedSelectedHero(card.id)
+              recognized: recognizedHeroFromCard(card.id)
             }">
             <label class="input-action" title="Выбрать">
               <input type="checkbox" v-model="selectedCard[card.id]">
@@ -82,22 +78,19 @@ export default {
                 {{ getRecognizedNames(card.id) }}
               </strong>
             </label>
-            <div class="input-group" v-if="selectedCard[card.id]">
-              <input
-                type="text"
-                list="hero-names"
-                v-model="selectedHero[card.id]"
-                placeholder="Имя"
-                @keyup="onSearchHero($event)"
-                @keyup.enter="actionCreateHero(selectedHero[card.id])">
+            <div class="input-actions" v-if="selectedCard[card.id]">
+              <select v-model="cardHeroId[card.id]">
+                <option :value="undefined" disabled selected>Выбрать</option>
+                <option
+                  v-for="option in selectHeroOptions"
+                  :value="option.value">{{ option.label }}</option>
+              </select>
               <input
                 type="button"
-                v-if="!isRecognizedSelectedHero(card.id)"
-                value="Добавить"
-                @click="actionCreateHero(selectedHero[card.id])">
+                value="Новый"
+                @click="actionCreateHero(card.id)">
             </div>
           </fieldset>
-
           <div
             class="editor__loading-indicator muted"
             v-if="avatarLoading[card.id]">
@@ -106,13 +99,13 @@ export default {
 
           <!-- Редактирование героя -->
           <component-editor
-            v-if="selectedCard[card.id] && isRecognizedSelectedHero(card.id)"
-            v-model="editHeroes[selectedHero[card.id]]"
+            v-if="selectedCard[card.id] && recognizedHeroFromCard(card.id)"
+            v-model="editHeroes[cardHeroId[card.id]]"
             :fields="fields"
-            :actions="actions"
+            :actions="heroActions"
             :options="{
               photo: createPhotoOptions(card.photo),
-              group: createGroupOptions(editHeroes[selectedHero[card.id]]),
+              group: createGroupOptions(editHeroes[cardHeroId[card.id]]),
               ancestorPoster: createAncestorPosterOptions(card.photo)
             }"
             :field-actions="{
@@ -120,7 +113,7 @@ export default {
               rank: { take: createTakeRankOption(card.message) },
               awards: { take: createTakeAwardsOption(card.message) },
               fallen: { take: createTakeFallenOption(card.message) },
-              sex: { take: createTakeSexOption(selectedHero[card.id]) },
+              sex: { take: createTakeSexOption(cardHeroId[card.id]) },
               story: { take: card.message },
               url: { take: createTakeUrlOption(card.id) },
               ancestorStory: { take: card.message },
@@ -128,8 +121,8 @@ export default {
             }"
             @action="doAction({
               action: $event,
-              name: selectedHero[card.id],
-              data: editHeroes[selectedHero[card.id]],
+              cardHeroId: cardHeroId[card.id],
+              hero: editHeroes[cardHeroId[card.id]],
               card: card
             })">
           </component-editor>
@@ -154,11 +147,6 @@ export default {
         :stat="stat"
         :loading="loading"
         @navigate="navigateCardsByAction"></component-navigation>
-
-      <!-- Автоподсказка (невидимая) -->
-      <datalist id="hero-names">
-        <option v-for="name in filteredHeroNames" :value="name"></option>
-      </datalist>
     </section>
   `,
   components: {
@@ -186,21 +174,21 @@ export default {
       imageProgress: {},
       avatarLoading: {},
       recognizedNames: {},
-      selectedCard: {},
-      selectedHero: {},
-      actionsLog: {},
+      // selectedCard: {},
+      // selectedHero: {},
+      // actionsLog: {},
       lockedUpdate: false,
-      generalActions: [
+      globalActions: [
         { type: 'clear-edit-heroes', label: 'Очистить кэш редактирования' },
       ],
       generalActionResult: '',
-      actions: [
+      heroActions: [
         { type: 'save-hero', label: 'Сохранить' },
       ],
       fields: [
         { key: 'photo', mode: 'edit', type: 'avatar', label: 'Фото', hideIfEmpty: true },
-        { key: 'awards', mode: 'edit', type: 'multiselect', label: 'Награды', options: Awards.names },
-        { key: 'rank', mode: 'edit', type: 'select', label: 'Звание', options: Ranks.names },
+        { key: 'awards', mode: 'edit', type: 'multiselect', label: 'Награды', options: [] },
+        { key: 'rank', mode: 'edit', type: 'select', label: 'Звание', options: [] },
         { key: 'story', mode: 'edit', type: 'text', label: 'История' },
         { key: 'fallen', mode: 'edit', type: 'check', label: 'Погиб' },
         { key: 'date', mode: 'edit', type: 'date', label: 'Дата' },
@@ -221,25 +209,7 @@ export default {
   watch: {
     async channel () {
       await this.init();
-      this.prepareFields();
-    },
-    selectedCard: {
-      handler () {
-        Object.keys(this.selectedCard).forEach(this.checkSyncEditHeroes);
-      },
-      deep: true
-    },
-    selectedHero: {
-      handler () {
-        Object.keys(this.selectedHero).forEach(this.checkSyncEditHeroes);
-      },
-      deep: true
-    },
-    heroes: {
-      handler () {
-        Object.keys(this.selectedHero).forEach(this.checkSyncEditHeroes);
-      },
-      deep: true
+      this.prepareAncestorFields();
     },
     searchCardsQuery () {
       this.searchChannelByQueryNextRate = 0;
@@ -267,10 +237,14 @@ export default {
       });
     }
   },
+  // async created () {
+  //   this.cards = this.createInitialCards();
+  //   this.stat = this.createInitialStat();
+  //   await this.init();
+  //   this.prepareFieldsOptions();
+  // },
   async created () {
-    await this.init();
-    this.prepareFields();
-    this.fields.filter(field => field.key === 'group')[0].options = Object.keys(this.heroes).sort();
+    this.prepareAncestorFields();
   },
   methods: {
     async init () {
@@ -282,6 +256,19 @@ export default {
       }
       this.actionRecognizeHeroNames();
       this.loading = false;
+    },
+    prepareAncestorFields () {
+      if (this.channel === 'mod_russia') {
+        const ancestorFields = this.fields.find(field => field.key.match(/ancestor/));
+        if (!ancestorFields) {
+          this.fields.push(
+            { key: 'ancestorPoster', mode: 'edit', type: 'image', label: 'Постер #ПредковДостойны' },
+            { key: 'ancestorStory', mode: 'edit', type: 'text', label: 'История #ПредковДостойны' },
+            { key: 'ancestorDate', mode: 'edit', type: 'date', label: 'Дата #ПредковДостойны' },
+            { key: 'ancestorUrl', mode: 'edit', type: 'input', label: 'Ссылка #ПредковДостойны' },
+          );
+        }
+      }
     },
     async refreshStat () {
       this.loading = true;
@@ -326,25 +313,25 @@ export default {
         }
       });
     },
-    async navigateCardsByAction (type) {
-      switch (type) {
-        case 'first':
-          await this.navigateCardsByIndex(0);
-          break;
-        case 'previous':
-          await this.navigateCardsByIndex(this.cards.from - this.cards.limit);
-          break;
-        case 'current':
-          await this.navigateCardsByIndex(this.cards.from);
-          break;
-        case 'next':
-          await this.navigateCardsByIndex(this.cards.from + this.cards.limit);
-          break;
-        case 'last':
-          await this.navigateCardsByIndex(this.stat.total - this.cards.limit);
-          break;
-      }
-    },
+    // async navigateCardsByAction (type) {
+    //   switch (type) {
+    //     case 'first':
+    //       await this.navigateCardsByIndex(0);
+    //       break;
+    //     case 'previous':
+    //       await this.navigateCardsByIndex(this.cards.from - this.cards.limit);
+    //       break;
+    //     case 'current':
+    //       await this.navigateCardsByIndex(this.cards.from);
+    //       break;
+    //     case 'next':
+    //       await this.navigateCardsByIndex(this.cards.from + this.cards.limit);
+    //       break;
+    //     case 'last':
+    //       await this.navigateCardsByIndex(this.stat.total - this.cards.limit);
+    //       break;
+    //   }
+    // },
     async navigateCardsByIndex (index) {
       this.loading = true;
       await this.getRemoteCards(index);
@@ -354,88 +341,78 @@ export default {
     // syncEditHeroes () {
     //   //
     // },
-    prepareFields () {
-      if (this.channel === 'mod_russia') {
-        const ancestorFields = this.fields.find(field => field.key.match(/ancestor/));
-        if (!ancestorFields) {
-          this.fields.push(
-            { key: 'ancestorPoster', mode: 'edit', type: 'image', label: 'Постер #ПредковДостойны' },
-            { key: 'ancestorStory', mode: 'edit', type: 'text', label: 'История #ПредковДостойны' },
-            { key: 'ancestorDate', mode: 'edit', type: 'date', label: 'Дата #ПредковДостойны' },
-            { key: 'ancestorUrl', mode: 'edit', type: 'input', label: 'Ссылка #ПредковДостойны' },
-          );
-        }
-      }
-    },
+
 
     //
     // Actions
     //
 
-    async doAction ({ action, name, data, card }) {
+    async doAction ({ action, cardHeroId, hero, card }) {
       return ({
         'save-hero': this.actionSaveHero,
         'clear-edit-heroes': () => {
           this.clearEditHeroes();
           this.generalActionResult = 'Очищено';
         }
-      })[action]({ name, data, card });
+      })[action]({ cardHeroId, hero, card });
     },
-    async actionCreateHero (name) {
-      // Не создавать пустого или уже существующего
-      if (!name || this.heroes[name]) {
-        return;
-      }
-      // Сначала спросить
-      const confirmed = await this.confirm({
-        body: `Добавить героя по имени &laquo;${name}&raquo;?`
-      });
-      if (confirmed) {
-        this.$emit('create-hero', name);
-        this.actionRecognizeHeroNames();
-      }
-    },
-    async actionSaveHero ({ name, data: update, card }) {
+    // async actionCreateHero (name) {
+    //   // Не создавать пустого или уже существующего
+    //   if (!name || this.heroes[name]) {
+    //     return;
+    //   }
+    //   // Сначала спросить
+    //   const confirmed = await this.confirm({
+    //     body: `Добавить героя по имени &laquo;${name}&raquo;?`
+    //   });
+    //   if (confirmed) {
+    //     this.$emit('create-hero', name);
+    //     this.actionRecognizeHeroNames();
+    //   }
+    // },
+    async actionSaveHero ({ cardHeroId, hero, card }) {
       this.actionsLog[card.id] = '';
       try {
         // Перенести все фотки
         await Promise.all(
           ['photo', 'ancestorPoster'].map(async field => {
-            if (update[field] && typeof update[field] === 'string' && !update[field].match(/^data\/images/)) {
-              const from = update[field];
+            if (hero[field] && typeof hero[field] === 'string' && !hero[field].match(/^data\/images/)) {
+              const from = hero[field];
               const filename = from.split('/').slice(-1)[0];
-              const saveTo = `data/images/${filename}`;
-              update[field] = saveTo;
-              await copyFile(from, saveTo);
+              const to = `data/images/${filename}`;
+              hero[field] = to;
+              await copyFile(from, to);
             }
           })
         );
-        const updateHero = {
-          [name]: {
-            name: name || '',
-            rank: update.rank || '',
-            awards: clone(update.awards?.slice() || []),
-            sex: update.sex || 'мужчина',
-            fallen: Boolean(update.fallen),
-            group: clone(update.group || []),
-            resources: Object.assign({}, update.resources),
-          }
+        const update = {
+          resourceKey: this.resourceKey,
+          list: [{
+            name: hero.name || '',
+            rank: hero.rank || '',
+            awards: clone(hero.awards?.slice() || []),
+            sex: hero.sex || 'мужчина',
+            fallen: Boolean(hero.fallen),
+            group: clone(hero.group || []),
+            resources: Object.assign({}, hero.resources),
+          }]
         };
-        if (update.date) {
-          if (!update.resources[this.channel]) {
-            updateHero[name].resources[this.channel] = {};
+        if (hero.date) {
+          if (!hero.resources[this.resourceKey]) {
+            update.list[0].resources[this.resourceKey] = {};
           }
-          updateHero[name].resources[this.channel].date = update.date || '';
+          update.list[0].resources[this.resourceKey].date = hero.date || '';
         }
-        if (update.ancestorPoster || update.ancestorStory) {
-          updateHero[name].resources.ancestor = {
-            poster: update.ancestorPoster || '',
-            story: update.ancestorStory || '',
-            date: update.ancestorDate || '',
-            url: update.ancestorUrl || ''
+        if (hero.ancestorPoster || hero.ancestorStory) {
+          update.list[0].resources.ancestor = {
+            poster: hero.ancestorPoster || '',
+            story: hero.ancestorStory || '',
+            date: hero.ancestorDate || '',
+            url: hero.ancestorUrl || '',
+            id: hero.ancestorUrl || ''
           }
         }
-        this.$emit('update-heroes', clone(updateHero));
+        this.$emit('update-heroes', update);
         await this.setCachedEditHeroes();
         this.actionsLog[card.id] = 'Готово';
       } catch (error) {
@@ -445,22 +422,22 @@ export default {
     async actionRecognizeHeroNames () {
       this.cards.list.forEach(({ id, message }) => {
         if (message) {
-          this.recognizedNames[id] = recognizeContacts(message, this.heroNames);
-          this.selectedHero[id] = this.recognizedNames[id][0];
+          this.recognizedNames[id] = recognizeContacts(
+            message,
+            this.recognizeHeroNamesOptions
+          );
+          this.cardHeroId[id] = this.getHeroesIdsByName(this.recognizedNames[id][0])[0];
         }
       });
     },
-    async actionDownloadPhoto (cardId, name) {
-      const card = this.cards.list.find(card => {
-        return Number(card.id) === Number(cardId);
-      });
+    async actionDownloadPhoto (card, hero) {
       if (card && card.photo && typeof card.photo === 'string' && !this.isSavedImage(card.photo)) {
-        this.avatarLoading[cardId] = true;
-        const filename = `${slug(name)}-${cardId}-${this.channel}.jpg`;
+        this.avatarLoading[card.id] = true;
+        const filename = `${slug(hero.name)}-${card.id}-${this.resourceKey.replace('.','-')}.jpg`;
         const saveTo = `${this.resourceCachePath}/images/${filename}`;
         await downloadImage(card.photo, saveTo);
         card.photo = saveTo;
-        this.avatarLoading[cardId] = false;
+        this.avatarLoading[card.id] = false;
       }
     },
     async onSearchCards (query) {
@@ -488,70 +465,97 @@ export default {
     // Utils
     //
 
-    isRecognizedSelectedHero (cardId) {
-      return this.heroNames.includes(this.selectedHero[cardId]);
-    },
-    getRecognizedNames (cardId) {
-      return this.recognizedNames[cardId]
-        ? this.recognizedNames[cardId].join(', ')
-        : '';
-    },
-    createPhotoOptions (photo) {
-      return photo ? [photo] : []
-    },
-    createGroupOptions (group) {
-      return group || [];
-    },
-    createAncestorPosterOptions (poster) {
-      return poster ? [poster] : [];
-    },
+    // recognizedHeroFromCard (cardId) {
+    //   return this.heroNames.includes(this.selectedHero[cardId]);
+    // },
+    // getRecognizedNames (cardId) {
+    //   return this.recognizedNames[cardId]
+    //     ? this.recognizedNames[cardId].join(', ')
+    //     : '';
+    // },
+    // createPhotoOptions (photo) {
+    //   return photo ? [photo] : []
+    // },
+    // createGroupOptions (group) {
+    //   return group || [];
+    // },
+    // createAncestorPosterOptions (poster) {
+    //   return poster ? [poster] : [];
+    // },
     createTakeDateOption (ms) {
       return formatDate(ms * 1000, 'YYYY-MM-DD');
     },
     createTakeRankOption (message) {
       return recognizeRanks(message)?.[0]?.name;
     },
-    createTakeAwardsOption (message) {
-      return recognizeAwards(message).map(award => award.name);
-    },
-    createTakeFallenOption (message) {
-      return Boolean(recognizeFallen(message));
-    },
-    createTakeSexOption (name) {
-      return recognizeSex(name);
-    },
+    // createTakeAwardsOption (message) {
+    //   return recognizeAwards(message).map(award => award.name);
+    // },
+    // createTakeFallenOption (message) {
+    //   return Boolean(recognizeFallen(message));
+    // },
+    // createTakeSexOption (name) {
+    //   return recognizeSex(name ||);
+    // },
     createTakeUrlOption (cardId) {
       return `https://t.me/${this.channel}/${cardId}`;
     },
-    createEditHero (name) {
-      this.lockedUpdate = true;
-      this.editHeroes[name] = Object.assign(
-        {},
-        clone(this.heroes[name] || {}),
-        clone(this.heroes[name].resources?.[this.channel] || {}),
-        {
-          ancestorPoster: this.heroes[name]?.resources?.ancestor?.poster || '',
-          ancestorStory: this.heroes[name]?.resources?.ancestor?.story || '',
-          ancestorDate: this.heroes[name]?.resources?.ancestor?.date || '',
-          ancestorUrl: this.heroes[name]?.resources?.ancestor?.url || '',
-        }
-      );
-      this.lockedUpdate = false;
-    },
+
+
+    // createEditHero (name) {
+    //   this.editHeroes[name] = Object.assign(
+    //     {},
+    //     clone(this.heroes[name] || {}),
+    //     clone(this.heroes[name].resources?.[this.channel] || {}),
+    //     {
+    //       ancestorPoster: this.heroes[name]?.resources?.ancestor?.poster || '',
+    //       ancestorStory: this.heroes[name]?.resources?.ancestor?.story || '',
+    //       ancestorDate: this.heroes[name]?.resources?.ancestor?.date || '',
+    //       ancestorUrl: this.heroes[name]?.resources?.ancestor?.url || '',
+    //     }
+    //   );
+    // },
     async checkSyncEditHeroes (cardId) {
-      const name = this.selectedHero[cardId];
+      // const name = this.selectedHero[cardId];
+      const card = this.cards.list.find(card => card.id === cardId) || {};
       const isSelected = this.selectedCard[cardId];
-      const isRecognized = this.heroes[name];
-      const editHeroEmpty = !this.editHeroes[name];
-      if (isSelected && isRecognized && editHeroEmpty) {
-        this.createEditHero(name);
+      const recognizedHero = this.recognizedHeroFromCard(cardId);
+      const editHero = this.editHeroes[this.cardHeroId[cardId]];
+      const editHeroEmpty = !editHero;
+      const editHeroEmptyCardData = editHero && (
+        !editHero.url ||
+        !editHero.photo ||
+        !editHero.story ||
+        !editHero.id
+      );
+      const cardClone = clone(card);
+      delete cardClone.name;
+
+      if (isSelected && recognizedHero && editHeroEmpty) {
+        // Создать микс из существующего героя и новых данных
+        this.editHeroes[this.cardHeroId[cardId]] = Object.assign(
+          {},
+          cardClone,
+          clone(recognizedHero),
+          clone(recognizedHero.resources?.zmil || {}),
+          clone(recognizedHero.resources?.[this.resourceKey] || {}),
+          {
+            ancestorPoster: recognizedHero.resources?.ancestor?.poster || '',
+            ancestorStory: recognizedHero.resources?.ancestor?.story || '',
+            ancestorDate: recognizedHero.resources?.ancestor?.date || '',
+            ancestorUrl: recognizedHero.resources?.ancestor?.url || '',
+          }
+        );
+      } else if (isSelected && recognizedHero && editHeroEmptyCardData) {
+        Object.assign(this.editHeroes[this.cardHeroId[cardId]], cardClone);
       }
-      if (isSelected && isRecognized) {
-        await this.actionDownloadPhoto(cardId, name);
+      if (isSelected && recognizedHero) {
+        await this.actionDownloadPhoto(card, clone(recognizedHero));
       }
       if (!isSelected) {
         this.actionsLog[cardId] = '';
       }
+      await this.setCachedEditHeroes();
     }
   }
 };

@@ -15,7 +15,7 @@ export default {
   props: {
     done: {
       type: Number,
-      required: true
+      default: null
     },
     total: {
       type: Number,
@@ -46,6 +46,8 @@ export default {
           return 'Грузим статистику...';
         } else if (!this.total) {
           return `(Нет данных)`;
+        } else if (!this.done) {
+          return `Всего ${this.total}`;
         } else if (this.total === this.done) {
           return `Обработано всё (${this.total})`;
         } else if (this.done === 0) {

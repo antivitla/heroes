@@ -18,7 +18,12 @@ export default {
         v-if="editField.length"
         v-for="(item, index) in editField">
         <select v-model="editField[index]">
-          <option v-for="option in options" :value="option">{{ option }}</option>
+          <template v-for="(option, index) in options">
+            <option
+              v-if="index > 0 && option.group !== options[index - 1].group"
+              disabled>{{ delimiter }}</option>
+            <option :value="option.value">{{ option.label }}</option>
+          </template>
         </select>
         <input type="button" @click="removeItem(index)" value="Удалить">
       </div>
@@ -26,7 +31,12 @@ export default {
       <div class="input-block">
         <select v-model="addItem" class="muted">
           <option value="" disabled selected>(Добавить)</option>
-          <option v-for="option in options" :value="option">{{ option }}</option>
+          <template v-for="(option, index) in options">
+            <option
+              v-if="index > 0 && option.group !== options[index - 1].group"
+              disabled>{{ delimiter }}</option>
+            <option :value="option.value">{{ option.label }}</option>
+          </template>
         </select>
       </div>
     </fieldset>
@@ -64,7 +74,7 @@ export default {
         this.editField.push(item);
         this.addItem = '';
       }
-    },
+    }
   },
   methods: {
     removeItem (index) {

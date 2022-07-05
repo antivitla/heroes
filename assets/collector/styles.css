@@ -952,9 +952,14 @@ input[type="button"].field-action {
   color: var(--color-red-text);
 }
 
-.select-hero .input-group {
+.select-hero .input-actions {
   flex-grow: 1;
   margin-left: 0.5rem;
+  display: flex;
+}
+
+.select-hero .input-actions > * {
+  margin-left: 0.25rem;
 }
 
 /* Modal */

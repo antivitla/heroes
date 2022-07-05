@@ -35,6 +35,12 @@ export default {
   },
   computed: {
     editMode () { return this.mode === 'edit'; },
+    delimiter () {
+      const l = this.options.reduce((length, option) => {
+        return Math.max(length, option.label.length);
+      }, 0);
+      return '─'.repeat(l / 3);
+    }
   },
   created () {
     this.sync();

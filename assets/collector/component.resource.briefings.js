@@ -86,8 +86,8 @@ export default {
       editCards: {},
       // initialQuery: 'уничтоженных военных объектов',
       globalActions: [
-        { type: 'recognize', label: 'Распознать данные' },
         { type: 'load-briefings', label: 'Загрузить новые брифинги' },
+        { type: 'recognize', label: 'Распознать данные' },
         { type: 'save', label: 'Сохранить статистику' }
       ],
       actionResult: '',

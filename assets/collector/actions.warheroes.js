@@ -50,7 +50,7 @@ export async function getWarheroesList(fromDate) {
         dateOfBirth,
         dateOfDeath,
       };
-      hero.id = slug(hero.name);
+      hero.id = hero.url;
       return hero;
     }).sort((a, b) => {
       const dateA = (!a.dateOfDeath || a.dateOfDeath > a.dateOfAward)

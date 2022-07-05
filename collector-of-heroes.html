@@ -31,7 +31,8 @@
       <component
         :is="currentResourceComponent"
         :resource-key="resource.current"
-        :heroes="heroes"
+        :all-resources-keys="allResourcesKeys"
+        :heroes-list="heroesList"
         :channel="currentResourceChannel"
         :channel-title="currentResourceChannelTitle"
         @create-hero="createHero"
@@ -43,11 +44,13 @@
   </main>
 
   <script type="module">
+    import deepmerge from './assets/lib/deepmerge.js';
     import { getJsonDocument, saveJsonDocument } from './assets/collector/utils.resource.js';
     import ComponentSelector from './assets/collector/component.selector.js';
     import ComponentModals from './assets/collector/component.modals.js';
 
     import ComponentResourceZmil from './assets/collector/component.resource.zmil.js';
+    import ComponentResourceZmilNew from './assets/collector/component.resource.zmil-new.js';
     import ComponentResourceWarheroes from './assets/collector/component.resource.warheroes.js';
     import ComponentResourceTsargrad from './assets/collector/component.resource.tsargrad.js';
     import ComponentResourceKontingent from './assets/collector/component.resource.kontingent.js';
@@ -56,12 +59,14 @@
     import ComponentResourceHeroes from './assets/collector/component.resource.heroes.js';
     import ComponentResourceBriefings from './assets/collector/component.resource.briefings.js';
     import ComponentResourceAwards from './assets/collector/component.resource.awards.js';
+    import MixinHeroList from './assets/collector/mixin.common-hero-list.js';
 
     const app = Vue.createApp({
       components: {
         ComponentSelector,
         ComponentModals,
         ComponentResourceZmil,
+        ComponentResourceZmilNew,
         ComponentResourceWarheroes,
         ComponentResourceTsargrad,
         ComponentResourceKontingent,
@@ -70,31 +75,36 @@
         ComponentResourceBriefings,
         ComponentResourceAwards,
       },
+      mixins: [MixinHeroList],
       data () {
         return {
           resource: {
             tabs: [
               { key: 'zmil', label: 'Герои Z', sublabel: 'z.mil.ru' },
+              { key: 'zmil-new', label: 'Герои Z (2)', sublabel: 'z.mil.ru' },
               { key: 'warheroes', label: 'Герои России', sublabel: 'warheroes.ru' },
               { key: 'tsargrad', label: 'Наши герои', sublabel: 'ug.tsargrad.tv' },
               { key: 'kontingent', label: 'Герои Z', sublabel: 'kontingent.press' },
               { key: 'telegram.rabotaembrat', label: 'Работаем, Брат! 🇷🇺', sublabel: '@rabotaembrat' },
               { key: 'telegram.zakharprilepin', label: 'Захар Прилепин', sublabel: '@zakharprilepin' },
               { key: 'telegram.mod_russia', label: 'Минобороны России', sublabel: '@mod_russia' },
-              { key: 'briefings', label: 'Брифинги', sublabel: 'z.mil.ru', group: 'right' },
+
+              { key: 'briefings', label: 'Брифинги', sublabel: 'z.mil.ru', notHeroResource: true, group: 'right' },
               // Специальные
               // { key: 'awards', label: 'Награды', sublabel: 'wikipedia.org', group: 'right' },
-              { key: 'heroes', label: 'Проверка', sublabel: 'heroes.json', group: 'right' }
+              { key: 'heroes', label: 'Проверка', sublabel: 'heroes.json', notHeroResource: true, group: 'right' }
             ],
             current: location.hash.replace('#', '') || 'zmil'
           },
-          heroes: {},
+          // heroes: {},
+          heroesList: [],
           modals: [],
         };
       },
       provide () {
         return {
-          confirm: this.openConfirm
+          confirm: this.openConfirm,
+          input: this.openInput
         };
       },
       watch: {
@@ -112,31 +122,62 @@
         currentResourceChannelTitle () {
           return this.resource.tabs.find(tab => this.resource.current === tab.key).label;
         },
+        allResourcesKeys () {
+          return this.resource.tabs.filter(tab => !tab.notHeroResource).map(tab => tab.key);
+        }
       },
       async created () {
         await this.getHeroes();
       },
       methods: {
         async getHeroes () {
-          this.heroes = await getJsonDocument('data/heroes.json');
+          // this.heroes = await getJsonDocument('data/heroes.json');
+          this.heroesList = await getJsonDocument('data/heroes-list.json');
         },
         async saveHeroes () {
-          await saveJsonDocument('data/heroes.json', this.heroes);
+          // await saveJsonDocument('data/heroes.json', this.heroes);
+          await saveJsonDocument('data/heroes-list.json', this.heroesList);
         },
         async createHero (name) {
-          if (this.heroes[name]) {
-            alert('Уже есть такой герой');
-            return;
-          }
-          this.heroes[name] = { name };
-          await this.saveHeroes();
+          // Если подобное имя уже есть, мы должны решить
+          // отменить ли создание или все-таки создать однофамильца.
+          // Он, впрочем, должен бы в итоге как-то отличаться...
+          // Мы, значит, должны предоставить опознавательную информацию
+          // об уже существующем герое, чтобы пользователь решил, тот же
+          // это или нет.
+          // const heroes = this.getHeroes({ name });
+          // const confirmed = !heroes.length || await this.openConfirm({
+          //   header: 'Такое имя уже есть'
+          //   body: heroes.map(hero => {
+          //     const links = ['zmil', 'warheroes', 'tsargrad', 'kontingent']
+          //       .map(src => {
+          //         return hero[src]?.url
+          //           ? `<a href="${hero[src]?.url}" target="_blank">${hero[src]?.url}</a>`
+          //           : '';
+          //       }).filter(item => item);
+          //     return `<p>${hero.name}, ${hero.rank}, ${links.join(', ')}</p>`;
+          //   });
+          // });
+
+          // if (confirmed) {
+          //   this.heroesList.push({ name })
+          // }
+          // await this.saveHeroes();
+          console.log('create hero', name);
         },
-        async updateHeroes (heroes) {
-          Object.keys(heroes).forEach(name => {
-            if (!this.heroes[name]) {
-              this.heroes[name] = { name };
+        async updateHeroes (update) {
+          update.list.forEach((hero, i) => {
+            const heroIndex = this.getHeroIndexById(
+              update.ids ? update.ids[i] : this.getHeroId(hero)
+            );
+            if (heroIndex > -1) {
+              this.heroesList[heroIndex] = deepmerge(this.heroesList[heroIndex], hero, {
+                arrayMerge: (target, source) => source
+              });
+            } else {
+              this.heroesList.push(hero);
+              console.warn('Новый герой добавлен:', hero);
             }
-            Object.assign(this.heroes[name], heroes[name]);
           });
           await this.saveHeroes();
         },
@@ -146,6 +187,9 @@
         async openConfirm ({ body, header } = {}) {
           return this.openModal({ type: 'confirm', body, header });
         },
+        async openInput ({ header } = {}) {
+          return this.openModal({ type: 'input', header });
+        },
         async openModal ({ type, body, header } = {}) {
           return new Promise((resolve, reject) => {
             this.modals.push({ type, body, header, resolve, reject });
@@ -153,9 +197,27 @@
         },
         closeModal () {
           this.modals.pop();
-        }
+        },
       }
     }).mount('#app');
+  </script>
+
+
+  <!-- Утилиты для консоли -->
+  <script>
+    window.COHGetHeroesList = async function () {
+      return await fetch('data/heroes-list.json').then(result => result.json());
+    }
+
+    window.COHFilterByResource = async function (resource) {
+      const list = await COHGetHeroesList();
+      return list.filter(hero => hero.resources[resource]);
+    }
+
+    window.COHFilterByCallback = async function (callback = h => h) {
+      const list = await COHGetHeroesList();
+      return list.filter(callback);
+    }
   </script>
 
 </body>

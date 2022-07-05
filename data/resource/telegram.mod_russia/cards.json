@@ -46,8 +46,8 @@
       "message": "",
       "replyMarkup": null,
       "entities": null,
-      "views": 80299,
-      "forwards": 69,
+      "views": 94521,
+      "forwards": 80,
       "replies": null,
       "editDate": null,
       "pinned": false,
@@ -109,8 +109,8 @@
       "message": "",
       "replyMarkup": null,
       "entities": null,
-      "views": 80726,
-      "forwards": 69,
+      "views": 94878,
+      "forwards": 80,
       "replies": null,
       "editDate": null,
       "pinned": false,
@@ -168,8 +168,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 84393,
-      "forwards": 63,
+      "views": 98918,
+      "forwards": 64,
       "replies": null,
       "editDate": 1654619465,
       "pinned": false,
@@ -186,35 +186,42 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 6353,
+            "count": 7025,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🥰",
-            "count": 680,
+            "count": 745,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 363,
+            "count": 419,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 277,
+            "count": 296,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 24,
+            "count": 30,
+            "className": "ReactionCount"
+          },
+          {
+            "flags": 0,
+            "chosen": false,
+            "reaction": "😢",
+            "count": 2,
             "className": "ReactionCount"
           },
           {
@@ -277,8 +284,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 83085,
-      "forwards": 58,
+      "views": 98552,
+      "forwards": 72,
       "replies": null,
       "editDate": 1654622047,
       "pinned": false,
@@ -295,42 +302,42 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 4211,
+            "count": 4663,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🥰",
-            "count": 542,
+            "count": 585,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 240,
+            "count": 272,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 154,
+            "count": 175,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 26,
+            "count": 35,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "😱",
-            "count": 2,
+            "count": 3,
             "className": "ReactionCount"
           }
         ],
@@ -677,7 +684,7 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 80550,
+      "views": 96942,
       "forwards": 4,
       "replies": null,
       "editDate": 1654626707,
@@ -692,35 +699,42 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 1591,
+            "count": 1788,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 59,
+            "count": 67,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 30,
+            "count": 36,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 12,
+            "count": 20,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "😱",
-            "count": 9,
+            "count": 10,
+            "className": "ReactionCount"
+          },
+          {
+            "flags": 0,
+            "chosen": false,
+            "reaction": "🥰",
+            "count": 1,
             "className": "ReactionCount"
           }
         ],
@@ -814,8 +828,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 88071,
-      "forwards": 100,
+      "views": 104371,
+      "forwards": 113,
       "replies": null,
       "editDate": 1654626725,
       "postAuthor": null,
@@ -829,49 +843,49 @@
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 2133,
+            "count": 2381,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 193,
+            "count": 221,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "😱",
-            "count": 61,
+            "count": 70,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 20,
+            "count": 25,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🥰",
-            "count": 8,
+            "count": 9,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "😢",
-            "count": 7,
+            "count": 8,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 2,
+            "count": 3,
             "className": "ReactionCount"
           }
         ],
@@ -955,8 +969,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 96337,
-      "forwards": 137,
+      "views": 113193,
+      "forwards": 140,
       "replies": null,
       "editDate": 1654626728,
       "postAuthor": null,
@@ -970,35 +984,35 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 1906,
+            "count": 2103,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 664,
+            "count": 738,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "😱",
-            "count": 60,
+            "count": 73,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 27,
+            "count": 30,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 17,
+            "count": 24,
             "className": "ReactionCount"
           },
           {
@@ -1012,7 +1026,7 @@
             "flags": 0,
             "chosen": false,
             "reaction": "😢",
-            "count": 11,
+            "count": 12,
             "className": "ReactionCount"
           }
         ],
@@ -1072,7 +1086,7 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 92149,
+      "views": 109955,
       "forwards": 15,
       "replies": null,
       "editDate": 1654628498,
@@ -1090,42 +1104,42 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 2678,
+            "count": 2971,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 129,
+            "count": 155,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🥰",
-            "count": 86,
+            "count": 95,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 57,
+            "count": 62,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 14,
+            "count": 17,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "😱",
-            "count": 4,
+            "count": 5,
             "className": "ReactionCount"
           }
         ],
@@ -1336,8 +1350,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 114426,
-      "forwards": 69,
+      "views": 142334,
+      "forwards": 82,
       "replies": null,
       "editDate": 1654632007,
       "pinned": false,
@@ -1354,42 +1368,42 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 3445,
+            "count": 3800,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 188,
+            "count": 207,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 104,
+            "count": 125,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🥰",
-            "count": 89,
+            "count": 97,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 29,
+            "count": 31,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "😢",
-            "count": 4,
+            "count": 5,
             "className": "ReactionCount"
           }
         ],
@@ -1448,25 +1462,25 @@
               64,
               195,
               98,
-              160,
-              198,
-              26,
-              172,
-              210,
-              45,
-              193,
-              234,
-              226,
-              175,
-              150,
-              162,
-              182,
+              195,
               39,
-              91,
-              231,
-              152,
-              180,
-              108
+              36,
+              220,
+              64,
+              111,
+              113,
+              254,
+              244,
+              47,
+              196,
+              30,
+              227,
+              51,
+              76,
+              251,
+              161,
+              203,
+              167
             ]
           },
           "date": 1654614069,
@@ -1694,8 +1708,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 149207,
-      "forwards": 102,
+      "views": 187125,
+      "forwards": 116,
       "replies": null,
       "editDate": 1654653651,
       "postAuthor": null,
@@ -1709,35 +1723,42 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 3158,
+            "count": 3649,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 291,
-            "className": "ReactionCount"
-          },
-          {
-            "flags": 0,
-            "chosen": false,
-            "reaction": "🥰",
-            "count": 111,
+            "count": 334,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 106,
+            "count": 136,
+            "className": "ReactionCount"
+          },
+          {
+            "flags": 0,
+            "chosen": false,
+            "reaction": "🥰",
+            "count": 129,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 16,
+            "count": 23,
+            "className": "ReactionCount"
+          },
+          {
+            "flags": 0,
+            "chosen": false,
+            "reaction": "😱",
+            "count": 1,
             "className": "ReactionCount"
           }
         ],
@@ -1790,25 +1811,25 @@
               64,
               196,
               98,
-              160,
-              198,
-              26,
-              224,
-              98,
-              71,
-              16,
-              128,
-              27,
-              135,
-              216,
-              77,
-              243,
-              130,
-              239,
-              145,
-              178,
-              216,
-              179
+              195,
+              39,
+              36,
+              80,
+              87,
+              5,
+              37,
+              123,
+              139,
+              118,
+              161,
+              190,
+              181,
+              242,
+              68,
+              40,
+              199,
+              192,
+              202
             ]
           },
           "date": 1654624117,
@@ -1999,8 +2020,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 108886,
-      "forwards": 143,
+      "views": 143757,
+      "forwards": 169,
       "replies": null,
       "editDate": 1654657269,
       "postAuthor": null,
@@ -2014,35 +2035,35 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 3575,
+            "count": 4121,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🥰",
-            "count": 328,
+            "count": 391,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 167,
+            "count": 204,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 110,
+            "count": 126,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 21,
+            "count": 28,
             "className": "ReactionCount"
           },
           {
@@ -2120,8 +2141,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 146918,
-      "forwards": 358,
+      "views": 196929,
+      "forwards": 443,
       "replies": null,
       "editDate": 1654661431,
       "pinned": false,
@@ -2138,42 +2159,42 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 4044,
+            "count": 4799,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🥰",
-            "count": 305,
+            "count": 380,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 150,
+            "count": 179,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 138,
+            "count": 173,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "😢",
-            "count": 7,
+            "count": 8,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 2,
+            "count": 4,
             "className": "ReactionCount"
           }
         ],
@@ -2229,8 +2250,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 93619,
-      "forwards": 43,
+      "views": 128018,
+      "forwards": 55,
       "replies": null,
       "editDate": 1654664467,
       "pinned": false,
@@ -2247,35 +2268,42 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 6089,
+            "count": 7394,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🥰",
-            "count": 602,
+            "count": 746,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 340,
+            "count": 423,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 237,
+            "count": 288,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 14,
+            "count": 21,
+            "className": "ReactionCount"
+          },
+          {
+            "flags": 0,
+            "chosen": false,
+            "reaction": "😢",
+            "count": 3,
             "className": "ReactionCount"
           }
         ],
@@ -2594,8 +2622,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 343785,
-      "forwards": 334,
+      "views": 496449,
+      "forwards": 375,
       "replies": null,
       "editDate": 1654677442,
       "postAuthor": null,
@@ -2609,49 +2637,49 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 3083,
+            "count": 3981,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 237,
+            "count": 305,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 102,
+            "count": 136,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🥰",
-            "count": 78,
+            "count": 114,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 17,
+            "count": 27,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "😱",
-            "count": 4,
+            "count": 5,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "😢",
-            "count": 1,
+            "count": 2,
             "className": "ReactionCount"
           }
         ],
@@ -2711,8 +2739,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 71524,
-      "forwards": 93,
+      "views": 109545,
+      "forwards": 110,
       "replies": null,
       "editDate": 1654677482,
       "pinned": false,
@@ -2729,42 +2757,42 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 2652,
+            "count": 3422,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 191,
+            "count": 253,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 103,
+            "count": 133,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🥰",
-            "count": 82,
+            "count": 108,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 11,
+            "count": 22,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "😢",
-            "count": 4,
+            "count": 5,
             "className": "ReactionCount"
           },
           {
@@ -2830,25 +2858,25 @@
               64,
               201,
               98,
-              160,
-              198,
-              26,
-              243,
-              66,
-              114,
-              242,
-              141,
-              208,
-              212,
-              29,
-              30,
-              184,
-              144,
-              204,
-              156,
-              189,
-              157,
-              104
+              195,
+              39,
+              36,
+              102,
+              168,
+              167,
+              95,
+              84,
+              1,
+              102,
+              158,
+              177,
+              49,
+              86,
+              237,
+              24,
+              1,
+              235,
+              63
             ]
           },
           "date": 1654678199,
@@ -3054,8 +3082,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 90130,
-      "forwards": 156,
+      "views": 136016,
+      "forwards": 183,
       "replies": null,
       "editDate": 1654678207,
       "postAuthor": null,
@@ -3069,35 +3097,35 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 2741,
+            "count": 3588,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 162,
+            "count": 227,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 110,
+            "count": 144,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🥰",
-            "count": 104,
+            "count": 134,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 11,
+            "count": 21,
             "className": "ReactionCount"
           },
           {
@@ -3154,8 +3182,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 74067,
-      "forwards": 41,
+      "views": 119994,
+      "forwards": 63,
       "replies": null,
       "editDate": 1654681534,
       "pinned": false,
@@ -3172,41 +3200,48 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 4900,
+            "count": 6792,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🥰",
-            "count": 453,
+            "count": 677,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 305,
+            "count": 427,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 258,
+            "count": 333,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 10,
+            "count": 20,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "😱",
+            "count": 4,
+            "className": "ReactionCount"
+          },
+          {
+            "flags": 0,
+            "chosen": false,
+            "reaction": "😢",
             "count": 2,
             "className": "ReactionCount"
           }
@@ -3266,25 +3301,25 @@
               64,
               203,
               98,
-              160,
-              198,
-              26,
-              162,
-              185,
-              57,
-              213,
-              118,
-              26,
-              94,
-              165,
-              66,
-              109,
-              222,
-              129,
-              174,
-              204,
-              12,
-              230
+              195,
+              39,
+              36,
+              138,
+              23,
+              67,
+              192,
+              27,
+              19,
+              47,
+              127,
+              224,
+              148,
+              13,
+              137,
+              221,
+              137,
+              37,
+              52
             ]
           },
           "date": 1654687175,
@@ -3509,8 +3544,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 85230,
-      "forwards": 148,
+      "views": 156680,
+      "forwards": 219,
       "replies": null,
       "editDate": 1654687199,
       "postAuthor": null,
@@ -3524,35 +3559,49 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 2855,
+            "count": 4425,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🥰",
-            "count": 211,
+            "count": 324,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 153,
+            "count": 237,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 133,
+            "count": 209,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 13,
+            "count": 25,
+            "className": "ReactionCount"
+          },
+          {
+            "flags": 0,
+            "chosen": false,
+            "reaction": "😱",
+            "count": 1,
+            "className": "ReactionCount"
+          },
+          {
+            "flags": 0,
+            "chosen": false,
+            "reaction": "😢",
+            "count": 1,
             "className": "ReactionCount"
           }
         ],
@@ -3605,25 +3654,25 @@
               64,
               204,
               98,
-              160,
-              198,
-              26,
-              235,
-              238,
-              42,
-              164,
-              234,
-              183,
-              76,
-              216,
-              130,
-              92,
-              18,
-              44,
-              12,
-              234,
-              133,
-              91
+              195,
+              39,
+              36,
+              64,
+              188,
+              47,
+              218,
+              189,
+              195,
+              7,
+              58,
+              202,
+              142,
+              127,
+              30,
+              205,
+              48,
+              154,
+              71
             ]
           },
           "date": 1654689057,
@@ -3862,8 +3911,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 78124,
-      "forwards": 141,
+      "views": 149489,
+      "forwards": 262,
       "replies": null,
       "editDate": 1654689321,
       "postAuthor": null,
@@ -3877,49 +3926,49 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 1516,
+            "count": 2476,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 716,
+            "count": 1087,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "😱",
-            "count": 98,
+            "count": 160,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 31,
+            "count": 48,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 18,
+            "count": 27,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🥰",
-            "count": 7,
+            "count": 15,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "😢",
-            "count": 5,
+            "count": 11,
             "className": "ReactionCount"
           }
         ],
@@ -3969,8 +4018,8 @@
           "className": "MessageEntityMention"
         }
       ],
-      "views": 50270,
-      "forwards": 51,
+      "views": 107987,
+      "forwards": 88,
       "replies": null,
       "editDate": 1654692729,
       "pinned": false,
@@ -3987,35 +4036,42 @@
             "flags": 0,
             "chosen": false,
             "reaction": "👍",
-            "count": 4174,
+            "count": 7188,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🥰",
-            "count": 422,
+            "count": 721,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "👏",
-            "count": 223,
+            "count": 426,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🔥",
-            "count": 174,
+            "count": 291,
             "className": "ReactionCount"
           },
           {
             "flags": 0,
             "chosen": false,
             "reaction": "🤬",
-            "count": 13,
+            "count": 30,
+            "className": "ReactionCount"
+          },
+          {
+            "flags": 0,
+            "chosen": false,
+            "reaction": "😢",
+            "count": 4,
             "className": "ReactionCount"
           }
         ],

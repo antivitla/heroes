@@ -15,7 +15,7 @@ export async function getAllOurHeroesList ({ callback }) {
     try {
       const htmlString = await getHtmlDocumentFromUrl(`${baseUrl}?${params}`);
       if (!htmlString.trim()) {
-        alert('No response' + params);
+        alert('Кажется, больше нет страниц, все загружено. ' + params);
         done = true;
       } else {
         const bodyFragment = createFragmentFromHtmlString(htmlString);
@@ -32,14 +32,16 @@ export async function getAllOurHeroesList ({ callback }) {
 }
 
 function parseOurHeroFragment (element) {
+  const photo = element.querySelector('.article__media-single img').getAttribute('src');
   return {
     name: element.querySelector('.heroes__item-head h3').textContent.trim()
       .replace('ё', 'е'),
     rank: element.querySelector('.heroes__item-head h4').textContent.trim()
       .replace(/^([а-я])/g, s => s.toUpperCase()),
-    photo: element.querySelector('.article__media-single img').getAttribute('src'),
+    photo,
     story: element.querySelector('.article__content').innerHTML.trim(),
     url: 'https://ug.tsargrad.tv/ourheroes',
+    id: photo
   };
 }
 

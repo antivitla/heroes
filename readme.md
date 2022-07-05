@@ -1,10 +1,36 @@
 # Разработка
 
-Чтобы обновить списки, нужно сгенерировать взять iam-ключ для распознавания текста на Yandex.Cloud
+Нужно создать файл `credentials.json` - в котором будут несколько защищенных данных. Во-первых ключи Telegram API (нужно для работы с телеграм-каналами), во-вторых ключи Yandex.Cloud.
+
+```json
+
+{
+  "telegram": {
+    "session": "...",
+    "apiId": "...",
+    "apiHash": "...",
+    "phoneNumber": "..."
+  },
+  "yandex.vision": {
+    "folderId": "...",
+    "iam.token": "..."
+  }
+}
+```
+
+**Yandex.Vision**
+
+Взять `folderId`: https://cloud.yandex.ru/docs/resource-manager/operations/folder/get-id
+
+Генерировать `iam.token` для распознавания текста на Yandex.Cloud
 
 `$ yc iam create-token` (Yandex.Cloud CLI)
 
-Затем его подставить в `yandex-vision-analyze.php`. Затем можно запускать те или иные процедуры обновления.
+**Telegram**
+
+Нужно подставитть номер телефона, Telegram API ID и Hash. Session он сам создаст.
+
+**Поднимаем локально**
 
 Поднимать локальный сервер через `docker-compose up` (Docker), так как требуется PHP при разработке. Для дистрибутива PHP не нужен.
 
@@ -13,8 +39,3 @@
 - Парсить текст на предмет:
   - награды
   - теги обстоятельств
-
-- Брать данные еще (не все выкладываются минобороной)
-  - Список героев рф: https://megabook.ru/article/Список%20Героев%20Российской%20Федерации%20(по%20годам)#2022
-  - еще список героев рф: https://warheroes.ru/main.asp/filter/get/ (взять страницы о них)
-  - VK: https://vk.com/mil

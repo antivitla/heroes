@@ -28,8 +28,8 @@ export default {
     ComponentDisplayArray
   },
   props: {
-    heroes: {
-      type: Object,
+    heroesList: {
+      type: Array,
       required: true
     },
     sources: {
@@ -42,11 +42,8 @@ export default {
     }
   },
   computed: {
-    heroList () {
-      return Object.values(this.heroes);
-    },
     heroCount () {
-      return this.heroList.length;
+      return this.heroesList.length;
     },
     zmilList () {
       return this.getSourceTypesList(['zmil']);
@@ -108,7 +105,7 @@ export default {
     //   }, true);
     // },
     getSourceTypesList (types) {
-      return this.heroList.filter(hero => {
+      return this.heroesList.filter(hero => {
         return types.reduce((result, type) => {
           return result && Boolean(hero.resources?.[type]);
         }, true);

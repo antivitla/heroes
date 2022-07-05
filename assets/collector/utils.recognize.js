@@ -151,14 +151,14 @@ export function recognizeAwards (string) {
   return Awards.list.filter(award => string.match(new RegExp(award.regexp, 'gi')));
 }
 
-export function recognizeRanks (string) {
-  return Ranks.list.filter(rank => rank.regexp && string.match(rank.regexp));
+export function recognizeRanks (src) {
+  return Ranks.list.filter(rank => rank.regexp && String(src).match(rank.regexp));
 }
 
-export function recognizeContacts (string, contacts) {
+export function recognizeContacts (string, contacts, getContact = item => item) {
   const normalizedString = string.replace('ё', 'е');
   return contacts.filter(contact => {
-    return normalizedString.match(createContactRegExp(contact));
+    return normalizedString.match(createContactRegExp(getContact(contact)));
   });
 }
 
