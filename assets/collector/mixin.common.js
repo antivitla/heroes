@@ -276,10 +276,13 @@ export default {
       );
     },
     async setCachedEditHeroes () {
-      await saveJsonDocument(
-        `${this.resourceCachePath}/edit-heroes.json`,
-        this.editHeroes
-      );
+      clearTimeout(this.setCachedEditHeroesTimeout);
+      this.setCachedEditHeroesTimeout = setTimeout(async () => {
+        await saveJsonDocument(
+          `${this.resourceCachePath}/edit-heroes.json`,
+          this.editHeroes
+        );
+      }, 300)
     },
     async clearEditHeroes () {
       this.editHeroes = {};

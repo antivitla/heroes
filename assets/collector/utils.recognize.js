@@ -44,6 +44,7 @@ export async function recognizeTextFromBase64Image (base64Image) {
 const recognitionParser = {
   poster: parsePosterData,
   ancestor: parseAncestorData,
+  zmilPoster: parsePosterData,
 };
 
 export async function recognizeTexts ({ list, keys, callback, useParser = true }) {

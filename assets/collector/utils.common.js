@@ -98,6 +98,10 @@ export function createFragmentFromHtmlString (string) {
 
 
 export function capitalizeFirstLetter(string) {
+  if (!string) {
+    console.log('no string', string);
+    return '';
+  }
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 

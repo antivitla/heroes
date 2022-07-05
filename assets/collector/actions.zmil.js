@@ -91,6 +91,7 @@ export async function getRemoteNewCards () {
     } else {
       elements = elements.concat(Array.prototype.slice.call(nodes));
       offset += limit;
+      console.log('Total', offset - limit + nodes.length);
     }
   }
   return elements.map(element => {

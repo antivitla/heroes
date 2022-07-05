@@ -200,7 +200,8 @@ export default {
     async getRemoteAllCards () {
       this.loading = true;
       await this.getStat();
-      this.allCards = await getRemoteNewCards();
+      const allCards = await getRemoteNewCards();
+      this.allCards = allCards.filter(card => !this.getHeroById(card.id));
       this.loading = false;
       this.actionRecognizeHeroNames();
       this.stat.total = this.allCards.length;
