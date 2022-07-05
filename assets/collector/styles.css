@@ -1065,7 +1065,8 @@ input[type="button"].field-action {
   border-radius: 0.25rem;
 }
 
-.check-hero__url {
+.check-hero__url,
+.check-hero__id {
   word-break: break-all;
   color: var(--color-app-text-muted);
 }

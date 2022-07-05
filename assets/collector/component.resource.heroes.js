@@ -93,6 +93,10 @@ export default {
                     v-if="field === 'poster'"
                     class="check-hero__poster"
                     :src="value">
+                  <a
+                    :href="value"
+                    target="_blank"
+                    v-else-if="field === 'url'">{{ value }}</a>
                   <span v-else>{{ value }}</span>
                 </p>
               </div>

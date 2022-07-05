@@ -453,7 +453,13 @@ export default {
     async actionDownloadPhoto (card, hero) {
       if (card && card.photo && typeof card.photo === 'string' && !this.isSavedImage(card.photo)) {
         this.avatarLoading[card.id] = true;
-        const filename = `${slug(hero?.name || 'photo')}-${card.id}-${this.resourceKey.replace('.','-')}.jpg`;
+        const filename = `${
+          slug(hero?.name || 'photo')
+        }-${
+          card.id
+        }-${
+          this.resourceKey.replace('.','-')
+        }.jpg`;
         const saveTo = `${this.resourceCachePath}/images/${filename}`;
         await downloadImage(card.photo, saveTo);
         card.photo = saveTo;
