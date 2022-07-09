@@ -624,6 +624,18 @@
     "awards": [
       "Герой Российской Федерации"
     ],
+    "area": "Государственная безопасность",
+    "name": "Васенков Михаил Анатольевич",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=21258",
+    "dateOfBirth": "1942-10-09",
+    "dateOfDeath": "2022-04-05",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=21258",
+    "date": "2022-04-05"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
     "area": "Армия: ВДВ",
     "name": "Фаршинев Дмитрий Александрович",
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32394",
@@ -631,18 +643,6 @@
     "dateOfDeath": "2022-04-05",
     "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32394",
     "date": "2022-04-05"
-  },
-  {
-    "awards": [
-      "Герой Российской Федерации"
-    ],
-    "area": "Государственная безопасность",
-    "name": "Васенков Михаил Анатольевич",
-    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=21258",
-    "dateOfBirth": "1942-10-09",
-    "dateOfDeath": "2022-04-06",
-    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=21258",
-    "date": "2022-04-06"
   },
   {
     "awards": [
@@ -971,6 +971,19 @@
     "awards": [
       "Герой Российской Федерации"
     ],
+    "area": "Армия: Бронетанковые войска",
+    "name": "Шиц Иван Александрович",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32570",
+    "dateOfAward": "2022-06-27",
+    "dateOfBirth": "1981-06-29",
+    "dateOfDeath": "",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32570",
+    "date": "2022-06-27"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
     "area": "Сельское хозяйство: Растениеводство",
     "name": "Тихий Эдуард Викентьевич",
     "url": "https://warheroes.ru/hero/hero.asp?Hero_id=20636",
@@ -978,5 +991,43 @@
     "dateOfDeath": "2022-06-27",
     "id": "https://warheroes.ru/hero/hero.asp?Hero_id=20636",
     "date": "2022-06-27"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Армия: Военная разведка",
+    "name": "Костечко Николай Николаевич",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=13165",
+    "dateOfBirth": "1946-11-25",
+    "dateOfDeath": "2022-07-03",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=13165",
+    "date": "2022-07-03"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Армия: Генералитет",
+    "name": "Абачев Эседулла Аблдулмуминович",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32556",
+    "dateOfAward": "2022-07-04",
+    "dateOfBirth": "1968-06-13",
+    "dateOfDeath": "",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32556",
+    "date": "2022-07-04"
+  },
+  {
+    "awards": [
+      "Герой Российской Федерации"
+    ],
+    "area": "Армия: Генералитет",
+    "name": "Лапин Александр Павлович",
+    "url": "https://warheroes.ru/hero/hero.asp?Hero_id=32555",
+    "dateOfAward": "2022-07-04",
+    "dateOfBirth": "1964-01-01",
+    "dateOfDeath": "",
+    "id": "https://warheroes.ru/hero/hero.asp?Hero_id=32555",
+    "date": "2022-07-04"
   }
 ]

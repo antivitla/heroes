@@ -177,6 +177,8 @@ export default {
           y: d => d.value,
           width: 900
         });
+        const d3 = this.$el.querySelector('.d3');
+        d3.innerHTML = '';
         this.$el.querySelector('.d3').append(node);
       },
       deep: true

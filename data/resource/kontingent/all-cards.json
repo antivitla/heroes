@@ -1,5 +1,29 @@
 [
   {
+    "id": "geroi-z-roman-kashtakov",
+    "name": "Роман Каштаков",
+    "photo": "https://storage.yandexcloud.net/kontingent-media/images/posts/geroi_z_kashtakov_roman_ukraina_3.jpg",
+    "url": "https://kontingent.press/post/geroi-z-roman-kashtakov"
+  },
+  {
+    "id": "geroi-z-stanislav-dzhioev",
+    "name": "Станислав Джиоев",
+    "photo": "https://storage.yandexcloud.net/kontingent-media/images/posts/geroi_z_jioev_stanislav_ukraina_2.jpg",
+    "url": "https://kontingent.press/post/geroi-z-stanislav-dzhioev"
+  },
+  {
+    "id": "geroi-z-egor-boldyrev",
+    "name": "Егор Болдырев",
+    "photo": "https://storage.yandexcloud.net/kontingent-media/images/posts/geroi_z_boldyrev_egor_ukraina_2.jpg",
+    "url": "https://kontingent.press/post/geroi-z-egor-boldyrev"
+  },
+  {
+    "id": "geroi-z-sergej-kuzminchuk",
+    "name": "Сергей Кузьминчук",
+    "photo": "https://storage.yandexcloud.net/kontingent-media/images/posts/geroi_z_kuzmenchuk_sergey_ukraina_3.jpg",
+    "url": "https://kontingent.press/post/geroi-z-sergej-kuzminchuk"
+  },
+  {
     "id": "geroi-z-albert-usmanov",
     "name": "Альберт Усманов",
     "photo": "https://storage.yandexcloud.net/kontingent-media/images/posts/geroi_z_usmanov_albert_ukraina.JPG",
