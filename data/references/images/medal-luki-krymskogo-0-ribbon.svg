@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="144" height="60">
-<rect width="144" height="60" style="fill:#fff;stroke:#000;stroke-width:2;stroke-opacity:.2"/>
-<path d="M12,0H63V60H81V0h51V60H12Z" style="fill:#ee2722"/>
-<path d="m72,0v60" style="stroke:#000;stroke-width:144;stroke-dasharray:2.07;opacity:.15"/>
-</svg>
