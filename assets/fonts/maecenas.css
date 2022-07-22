@@ -1,0 +1,56 @@
+@font-face {
+    font-family: 'Maecenas';
+    src: url('maecenas-semi-bold.woff2') format('woff2'),
+        url('maecenas-semi-bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Maecenas';
+    src: url('maecenas-semi-bold-italic.woff2') format('woff2'),
+        url('maecenas-semi-bold-italic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Maecenas';
+    src: url('maecenas-light.woff2') format('woff2'),
+        url('maecenas-light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Maecenas';
+    src: url('maecenas-light-italic.woff2') format('woff2'),
+        url('maecenas-light-italic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Maecenas';
+    src: url('maecenas-regular.woff2') format('woff2'),
+        url('maecenas-regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Maecenas';
+    src: url('maecenas-regular-italic.woff2') format('woff2'),
+        url('maecenas-regular-italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+
+

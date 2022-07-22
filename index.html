@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Герои специальной военной операции на Украине</title>
+  <link rel="icon" type="image/png" href="assets/images/hero-star.png">
+  <link href="assets/heroes.css" rel="stylesheet">
+  <script src="assets/mr-fontfit.js"></script>
+  <!-- <script src="assets/media-banner.js"></script> -->
+  <script src="assets/media-banner.js" type="module"></script>
+  <script src="assets/random-content.js" type="module"></script>
+  <script src="assets/media-playlist.js" type="module"></script>
+  <script src="assets/lib/vue3.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GK7YBXYWYF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-GK7YBXYWYF');
+  </script>
+</head>
+<body>
+  <div class="app-page">
+    <main class="app-main">
+      <header class="app-header">
+        <media-banner
+          video="assets/video/apachev-very-low.mp4"
+          audio="
+            assets/audio/krupnov--i-stay.mp3,
+            assets/audio/smoylov--for-donbass.mp3,
+            assets/audio/chicherina-apachev--armata.mp3,
+            assets/audio/zlatoustovsky--heroes-of-the-past.mp3,
+            assets/audio/rastorguev--monkberry-moon-delight.mp3,
+            assets/audio/rich--dirty-work.mp3,
+            assets/audio/zveroboy--my-motherland-coming-back.mp3,
+            assets/audio/gabriel--digging-in-the-dirt.mp3,
+            assets/audio/digga--on-fire.mp3,
+            assets/audio/maccartney--monkberry-moon-delight.mp3,
+            assets/audio/tsoy--war.mp3,
+            assets/audio/sukachev--i-stay.mp3,
+            assets/audio/motor-roller--song-of-red-army-soldier.mp3,
+            assets/audio/apachev--ukraine-dnr.mp3,
+            assets/audio/apachev--do-not-follow-me.mp3,
+            assets/audio/chicherina--on-frontline.mp3,
+            assets/audio/vysotsky--ballad-for-fight.mp3,
+            assets/audio/chicherina--airport.mp3,
+            assets/audio/kachura-lisovina--donbass-behind-us.mp3,
+            assets/audio/marshal--i-am-su24.mp3,
+            assets/audio/prokofiev--dance-of-the-knights.mp3
+          ">
+          <h1 class="content">
+            <div data-text-stroke="dark" class="text-heroes">Герои</div>
+            <div data-text-stroke="dark">специальной военной операции</div>
+            <div data-text-stroke="dark">на&nbsp;Украине</div>
+          </h1>
+        </media-banner>
+        <div class="app-header__interlace"></div>
+      </header>
+
+      <!-- Вступление -->
+      <section class="diagonal-top">
+        <p class="content lead">
+          <random-content>
+            <random-content-option>Мир — это результат прошлой войны</random-content-option>
+            <random-content-option>Чем надежней убегаешь от лап смерти,<br>тем верней попадаешь ей в пасть.</random-content-option>
+            <random-content-option>Война это поляризованная жизнь.<br>Душевная грязь гаже, зато дух чище.</random-content-option>
+          </random-content>
+        </p>
+      </section>
+
+      <!-- Основная часть -->
+      <section id="heroes-main" class="diagonal-bottom">
+        <div class="content" v-if="!heroes.length">Грузим...</div>
+        <div v-else>
+          <div class="content">
+            <div class="actions-bar heroes-names-actions-bar">
+              <div class="actions-left">
+                <input
+                  type="text"
+                  v-model="searchFor['heroes-names']"
+                  class="heroes-names-search"
+                  placeholder="Найти по имени">
+              </div>
+              <div class="actions-right">
+                <button
+                  class="heroes-names-order"
+                  v-bind:class="{
+                    'active': orderByFor['heroes-names'] === 'firstName',
+                    'asc': orderDirectionFor['heroes-names']
+                  }"
+                  v-on:click="setOrderByAndToggleDirectionFor('firstName', 'heroes-names')">Имя</button>
+                <button
+                  class="heroes-names-order"
+                  v-bind:class="{
+                    'active': orderByFor['heroes-names'] === 'lastName',
+                    'asc': orderDirectionFor['heroes-names']
+                  }"
+                  v-on:click="setOrderByAndToggleDirectionFor('lastName', 'heroes-names')">Фамилия</button>
+                <button
+                  class="heroes-names-order"
+                  v-bind:class="{
+                    'active': orderByFor['heroes-names'] === 'date',
+                    'asc': orderDirectionFor['heroes-names']
+                  }"
+                  v-on:click="setOrderByAndToggleDirectionFor('date', 'heroes-names')">Дата</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-fullwidth">
+            <hc-heroes-names
+              v-bind:search-by-name="searchFor['heroes-names']"
+              v-bind:order-by="orderByFor['heroes-names']"
+              v-bind:order-direction="orderDirectionFor['heroes-names']"
+              v-bind:heroes="heroes"
+              v-on:open-hero="onOpenHero"></hc-heroes-names>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Подвал -->
+      <footer class="app-footer">
+        <random-content>
+          <random-content-option>
+            <img class="app-footer__image" src="assets/images/nikulin.jpg">
+            <a class="app-footer__artist" href="http://www.grekovstudio.ru/artists/now/shtrikman-leonid-lvovich" target="_blank" title="Открыть страницу художника на сайте студии">
+              <div>
+                Штрикман Леонид Львович<br>
+                «Портрет Никулина Ю.В.»<br>
+                Студия военных художников им. Грекова, 2021 г.<br>
+              </div>
+              <img src="assets/images/grekov-logo.png" class="app-footer__artist-logo">
+            </a>
+          </random-content-option>
+          <!-- <random-content-option>
+            <img class="app-footer__image" src="assets/images/kalibr-002.jpg">
+            <a class="app-footer__artist" href="http://www.grekovstudio.ru/artists/now/shtrikman-leonid-lvovich" target="_blank" title="Открыть страницу художника на сайте студии">
+              <div>
+                Штрикман Леонид Львович<br>
+                «Каспийская флотилия. Ракетная атака»<br>
+                Студия военных художников им. Грекова, 2020 г.<br>
+              </div>
+              <img src="assets/images/grekov-logo.png" class="app-footer__artist-logo">
+            </a>
+          </random-content-option>
+          <random-content-option>
+            <img class="app-footer__image" src="assets/images/medics.jpg">
+            <a class="app-footer__artist" href="http://www.grekovstudio.ru/artists/now/sytov-aleksandr-kapitonovich" target="_blank" title="Открыть страницу художника на сайте студии">
+              <div>
+                Сытов Александр Капитонович<br>
+                «Военные медики в Чечне»<br>
+                Студия военных художников им. Грекова, 2021 г.<br>
+              </div>
+              <img src="assets/images/grekov-logo.png" class="app-footer__artist-logo">
+            </a>
+          </random-content-option> -->
+        </random-content>
+      </footer>
+    </main>
+
+    <!-- Боковоя панель -->
+    <nav class="app-nav">
+      <button
+        class="app-nav__toggle-nav action"
+        type="button"
+        data-toggle-container=".app-page"
+        data-toggle-class="app-nav_opened"
+        data-emit-on-click="resize-media-banner"
+        data-emit-on-click-delay="300"></button>
+      <section class="app-nav__content">
+
+        <!-- Плейлист -->
+        <h3>Плейлист</h3>
+        <media-playlist for=".app-header media-banner" type="audio">
+          <media-playlist-item
+            src="assets/audio/apachev--do-not-follow-me.mp3"
+            href="https://vk.com/search?c[q]=Апачев — Не ходи за мной&c[section]=auto">Апачев — Не ходи за мной</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/apachev--ukraine-dnr.mp3"
+            href="https://vk.com/search?c[q]=Апачев — Украина—ДНР&c[section]=auto">Апачев — Украина—ДНР (16+)</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/vysotsky--ballad-for-fight.mp3"
+            href="https://vk.com/search?c[q]=Высоцкий — Баллада о борьбе&c[section]=auto">Высоцкий — Баллада о борьбе</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/gabriel--digging-in-the-dirt.mp3"
+            href="https://vk.com/search?c[q]=Gabriel — Digging in the dirt&c[section]=auto">Gabriel — Digging in the dirt</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/zveroboy--my-motherland-coming-back.mp3"
+            href="https://vk.com/search?c[q]=Зверобой — Моя родина возвращается&c[section]=auto">Зверобой — Моя родина возвращается</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/zlatoustovsky--heroes-of-the-past.mp3"
+            href="https://vk.com/search?c[q]=Златоустовский — От героев былых времен&c[section]=auto">Златоустовский — Вечный огонь (От героев былых времен)</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/kachura-lisovina--donbass-behind-us.mp3"
+            href="https://vk.com/search?c[q]=Качура — Донбасс за нами&c[section]=auto">Качура, Лисовина — Донбасс за нами</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/krupnov--i-stay.mp3"
+            href="https://vk.com/search?c[q]=Крупнов — Я остаюсь&c[section]=auto">Крупнов — Я остаюсь</media-playlist-item>
+          <media-playlist-item src="assets/audio/marshal--i-am-su24.mp3" href="https://vk.com/search?c[q]=Маршал — Я не Шарли, я Су-24&c[section]=auto">Маршал — Я не Шарли, я Су-24</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/motor-roller--song-of-red-army-soldier.mp3"
+            href="https://vk.com/search?c[q]=Мотор-Роллер — Песня красноармейца&c[section]=auto">Мотор-Роллер — Песня красноармейца</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/maccartney--monkberry-moon-delight.mp3"
+            href="https://vk.com/search?c[q]=McCartney — Monkberry Moon Delight&c[section]=auto">McCartney — Monkberry Moon Delight</media-playlist-item>
+          <media-playlist-item src="assets/audio/prokofiev--dance-of-the-knights.mp3" href="https://vk.com/search?c[q]=Прокофьев — Танец рыцарей&c[section]=auto">Прокофьев — Танец рыцарей</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/rastorguev--monkberry-moon-delight.mp3"
+            href="https://vk.com/search?c[q]=Расторгуев — Monkberry Moon Delight&c[section]=auto">Расторгуев — Monkberry Moon Delight</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/rich--dirty-work.mp3"
+            href="https://vk.com/search?c[q]=РИЧ — Грязная работа&c[section]=auto">РИЧ — Грязная работа</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/digga--on-fire.mp3"
+            href="https://vk.com/search?c[q]=Рэм Дигга — В огне&c[section]=auto">Рэм Дигга — В огне</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/smoylov--for-donbass.mp3"
+            href="https://vk.com/search?c[q]=Самойлов — За Донбасс&c[section]=auto">Самойлов — За Донбасс</media-playlist-item>
+          <media-playlist-item src="assets/audio/sklar--war-ahead.mp3" href="https://vk.com/search?c[q]=Скляр — Война на пороге&c[section]=auto">Скляр — Миллионы (Война на пороге)</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/sukachev--i-stay.mp3"
+            href="https://vk.com/search?c[q]=Сукачев — Я остаюсь&c[section]=auto">Сукачев — Я остаюсь</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/tsoy--war.mp3"
+            href="https://vk.com/search?c[q]=Цой — Война&c[section]=auto">Цой — Война</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/chicherina--airport.mp3"
+            href="https://vk.com/search?c[q]=Чичерина — Воздушная гавань&c[section]=auto">Чичерина — Воздушная гавань</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/chicherina--on-frontline.mp3"
+            href="https://vk.com/search?c[q]=Чичерина — На передовой&c[section]=auto">Чичерина — На передовой</media-playlist-item>
+          <media-playlist-item
+            src="assets/audio/chicherina-apachev--armata.mp3"
+            href="https://vk.com/search?c[q]=Чичерина и Апачев — Армата&c[section]=auto">Чичерина и Апачев — Армата</media-playlist-item>
+        </media-playlist>
+
+        <!-- Копирайты -->
+        <div class="app-credits">
+          <div class="app-credits__title">Герои специальной военной операции на&nbsp;Украине</div>
+          <div class="app-credits__motto">Сделано в России</div>
+          <img src="assets/images/bear.png" height="50" class="app-credits__mascot">
+        </div>
+      </section>
+    </nav>
+
+    <!-- Панели и модальные окна -->
+    <div class="overlay-wrapper opened" v-if="panel.hero">
+      <div class="panel-backdrop" v-on:click="panel.hero = null"></div>
+      <hc-hero-panel v-bind:hero="panel.hero" v-on:close="panel.hero = null"></hc-hero-panel>
+<!--       <div class="panel">
+        <div class="panel-header">
+          <h2>Header</h2>
+          <button
+            class="action-transparent close"
+            v-on:click="openedPanel.hero = false">&times;</button>
+        </div>
+        <div class="panel-main">Main</div>
+        <div class="panel-footer">Footer</div>
+      </div> -->
+    </div>
+  </div>
+
+  <script type="module">
+    import initToggle from './assets/toggle.js';
+    import initTextStroke from './assets/text-stroke.js';
+    import initEmitOnClick from './assets/emit-on-click.js';
+    initToggle();
+    initTextStroke();
+    initEmitOnClick();
+    // Исходный резайз медиа-баннера, если открыта боковая панель
+    setTimeout(() => {
+      document.dispatchEvent(new CustomEvent('resize-media-banner'));
+    }, 300);
+
+
+    import heroesMixin from './assets/mixins/heroes.js';
+    import HcHeroesNames from './assets/components/heroes-names.js';
+    import HcHeroPanel from './assets/components/hero-panel.js';
+    const app = Vue.createApp({
+      components: {
+        HcHeroesNames,
+        HcHeroPanel
+      },
+      mixins: [heroesMixin],
+      data () {
+        return {
+          heroes: [],
+          searchFor: {
+            'heroes-names': ''
+          },
+          orderByFor: {
+            'heroes-names': 'date'
+          },
+          orderDirectionFor: {
+            'heroes-names': true
+          },
+          panel: {
+            hero: null
+          }
+        };
+      },
+      async created () {
+        await this.fetchHeroes();
+      },
+      mounted () {
+        initToggle();
+        initEmitOnClick();
+      },
+      methods: {
+        async fetchHeroes () {
+          // const url = 'https://mr-woodman.ru/heroes-list/heroes-list.json';
+          const url = 'assets/heroes.json';
+          this.heroes = await fetch(url).then(response => response.json());
+          return this.heroes;
+        },
+        setOrderByAndToggleDirectionFor (order, section) {
+          if (this.orderByFor[section] === order) {
+            this.orderDirectionFor[section] = !this.orderDirectionFor[section];
+          }
+          this.orderByFor[section] = order;
+        },
+        onOpenHero (hero) {
+          this.panel.hero = hero;
+          console.log(this.panel.hero);
+        }
+      }
+    });
+    app.config.compilerOptions.isCustomElement = tag => tag.match(/media-|random-|playlist-|button/);
+    app.mount('.app-page');
+  </script>
+
+</body>
+</html>
