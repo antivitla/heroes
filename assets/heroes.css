@@ -1,6 +1,15 @@
 @import url("fonts/leksa.css");
 @import url("fonts/maecenas.css");
 
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 html {
   --font-family-text: Leksa, Georgia, serif;
   --font-family-header: Maecenas, Georgia, serif;
@@ -20,13 +29,15 @@ html {
   --color-app-text-invert-muted: #d0cfca99;
   --color-app-text-invert-solid: #d0cfca;
 
+  --color-backdrop-background: #4f4f4c99;
+
   --color-line: #4f4f4c99;
   --color-line-light: #cfcfc8;
 
   --gradient-transparent-dark: linear-gradient(#2f2f2c00 0%, #2f2f2c99 50%, #2f2f2cee 100%);
   --gradient-transparent-black: linear-gradient(#00000000 0%, #00000088 100%);
 
-  --width-sidebar: 420px;
+  --width-sidebar: 400px;
   --duration-transition: 0.2s;
 }
 
@@ -61,7 +72,8 @@ h1, h2, h3, h4, h5 {
   font-family: var(--font-family-header);
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="search"] {
   background-color: white;
   padding: 0 0.5rem;
   font-size: inherit;
@@ -76,8 +88,8 @@ input[type="text"] {
   box-shadow: 0px 0px 10px 0px #00000011;
 }
 
-button {
-  /*background-color: white;*/
+button,
+.action {
   padding: 0 0.5rem;
   font-size: 87.5%;
   text-transform: uppercase;
@@ -87,33 +99,19 @@ button {
   line-height: 2rem;
   height: 2rem;
   border-radius: 0.25rem;
-  border: solid 1px var(--color-line-light);
-  border-bottom: solid 3px var(--color-line-light);
-  box-shadow: 0px 0px 10px 0px #00000011;
+  border: solid 1px transparent;
+  border-bottom: solid 3px transparent;
   cursor: pointer;
-  margin: 0 0.125rem;
 }
 
-button.action-transparent {
-  background-color: transparent;
-  border-color: transparent;
-  box-shadow: none;
-}
-
-.highlight {
-  color: var(--color-app-highlight);
-}
-
-.action {
-  background: transparent;
-  border: none;
-  padding: 0;
+.action_icon {
   min-width: 2rem;
-  height: 2rem;
-  cursor: pointer;
+  padding: 0;
   font-size: 1.5rem;
-  line-height: 2rem;
-  color: inherit;
+}
+
+.action_text {
+  background-color: transparent;
 }
 
 .text-stroke-dark {
@@ -143,30 +141,63 @@ button.action-transparent {
   font-style: italic;
 }
 
+.loader_text {
+  color: var(--color-app-text-muted);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader_text:after {
+  content: "Грузим...";
+  font-style: italic;
+  font-weight: bold;
+}
+
+.loader_icon {
+  color: var(--color-app-text-muted);
+  text-align: center;
+}
+
+.loader_icon:before {
+  content: "\21bb";
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  text-align: center;
+  animation: spin 1s infinite linear;
+}
+
+.loader_icon.loader_text:after {
+  margin-left: 0.125rem;
+}
+
 /* Диагонали */
 
-.diagonal-top,
-.diagonal-bottom {
+.diagonal_top,
+.diagonal_bottom {
   position: relative;
   display: flex;
   flex-direction: column;
 }
 
-.diagonal-bottom {
+.diagonal_bottom {
   padding-bottom: 4rem;
 }
 
-.diagonal-top > * {
+.diagonal_top > * {
   position: relative;
   z-index: 1;
 }
 
-.diagonal-bottom > * {
+.diagonal_bottom > * {
   position: relative;
   z-index: 3;
 }
 
-.diagonal-top:before {
+.diagonal_top:before {
   content: " ";
   width: 100%;
   width: calc(100% + 2rem);
@@ -182,7 +213,7 @@ button.action-transparent {
   z-index: 0;
 }
 
-.diagonal-bottom:after {
+.diagonal_bottom:after {
   content: " ";
   width: calc(100% + 2rem);
   position: absolute;
@@ -198,36 +229,45 @@ button.action-transparent {
 }
 
 @media (min-width: 768px) {
-  .diagonal-top:before,
-  .diagonal-bottom:after {
+  .diagonal_top:before,
+  .diagonal_bottom:after {
     height: 3.5rem;
   }
 }
 
 @media (min-width: 1200px) {
-  .diagonal-top:before,
-  .diagonal-bottom:after {
+  .diagonal_top:before,
+  .diagonal_bottom:after {
     height: 4rem;
   }
 }
 
 @media (min-width: 1600px) {
-  .diagonal-top:before,
-  .diagonal-bottom:after {
+  .diagonal_top:before,
+  .diagonal_bottom:after {
     height: 4.5rem;
   }
 }
 
-/*.diagonal-left {
+.actions {
+  display: flex;
+}
+
+.actions__right {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+/*.diagonal_left {
   position: relative;
 }
 
-.diagonal-left > * {
+.diagonal_left > * {
   position: relative;
   z-index: 1;
 }
 
-.diagonal-left:before {
+.diagonal_left:before {
   content: " ";
   width: 100%;
   height: calc(100% + 2rem);
@@ -378,28 +418,6 @@ media-playlist-item:not(:last-child) {
   left: 1rem;
 }
 
-.app-header__toggle-nav {
-  position: fixed;
-  right: 1rem;
-  top: 1rem;
-  background-color: var(--color-app-background);
-  border-radius: 25%;
-  z-index: 200;
-}
-
-.app-header__toggle-nav:before {
-  content: "\2261";
-}
-
-.app-page.app-nav_opened .app-header__toggle-nav {
-  background-color: transparent;
-  color: var(--color-app-text-invert);
-}
-
-.app-page.app-nav_opened .app-header__toggle-nav:before {
-  content: "\00D7";
-}
-
 /* Подвал */
 
 .app-footer {
@@ -437,7 +455,8 @@ media-playlist-item:not(:last-child) {
 .app-footer__image {
   width: 100%;
   display: block;
-  opacity: 0.9;
+  opacity: 0.95;
+  transform: translateY(1px);
 }
 
 /* Художник картины */
@@ -454,7 +473,7 @@ media-playlist-item:not(:last-child) {
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  z-index: 10001;
+  z-index: 11;
 }
 
 .app-footer__artist-logo {
@@ -501,12 +520,17 @@ media-playlist-item:not(:last-child) {
   position: absolute;
   left: -3.5rem;
   top: 1rem;
-  background-color: var(--color-app-background-invert);
-  color: var(--color-app-text-invert);
+  background-color: var(--color-app-background);
+  color: var(--color-app-text);
   border-radius: 25%;
   z-index: 200;
   font-weight: normal;
   font-family: Arial;
+}
+
+.app-nav__toggle-nav.invert {
+  background-color: var(--color-app-background-invert);
+  color: var(--color-app-text-invert);
 }
 
 .app-nav__toggle-nav:before {
@@ -522,6 +546,7 @@ media-playlist-item:not(:last-child) {
   right: 1.5rem;
   background-color: var(--color-app-background-invert);
   color: var(--color-app-text-invert);
+  box-shadow: 0px 0px 30px 20px var(--color-app-background-invert);
 }
 
 /* Данные проекта */
@@ -557,34 +582,31 @@ media-playlist-item:not(:last-child) {
   bottom: 0;
 }
 
-/* Actions */
-
-.actions-bar {
-  display: flex;
-}
-
-.actions-right {
-  margin-left: auto;
-  margin-right: 0;
-}
-
 /* Компоненты: heroes-names */
 
-.heroes-names {
+.heroes-names-actions {
+  margin-bottom: 1.5rem;
+}
+
+.heroes-names-list {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-}
-
-.heroes-names:not([class*="below-"]) {
   justify-content: space-between;
 }
 
-.heroes-names.below-100 {
+.heroes-names-list.count-below-100 {
   justify-content: center;
 }
 
-.heroes-names-item {
+.heroes-names-list__empty {
+  text-align: center;
+  font-style: italic;
+  color: var(--color-app-text-muted);
+  width: 100%;
+}
+
+.heroes-names-list__item {
   margin: 0.125rem 0.25rem;
   font-size: 0.5rem;
   line-height: 1rem;
@@ -593,36 +615,36 @@ media-playlist-item:not(:last-child) {
   font-weight: bold;
 }
 
-.heroes-names-item:after {
+.heroes-names-list__item:after {
   content: '';
   position: absolute;
   top: calc(50% + 0.5em);
   left: 0;
   right: 0;
   height: 0;
-  border-top: solid 1px var(--color-app-link);
+  border-top: dashed 1px var(--color-app-link);
   opacity: 0.5;
 }
 
-.heroes-names.below-100 .heroes-names-item {
+.count-below-100 .heroes-names-list__item {
   font-size: 0.625rem;
   line-height: 1.25rem;
   margin: 0.125rem 0.375rem;
 }
 
-.heroes-names.below-50 .heroes-names-item {
+.count-below-50 .heroes-names-list__item {
   font-size: 0.75rem;
   line-height: 1.5rem;
   margin: 0.25rem 0.625rem;
 }
 
-.heroes-names.below-25 .heroes-names-item {
+.count-below-25 .heroes-names-list__item {
   font-size: 1rem;
   line-height: 2rem;
   margin: 0.25rem 0.75rem;
 }
 
-.heroes-names-divider {
+.heroes-names-list__divider {
   font-weight: bold;
   font-size: 0.625rem;
   line-height: 1.125rem;
@@ -632,115 +654,196 @@ media-playlist-item:not(:last-child) {
   border-radius: 0.25rem;
 }
 
-.heroes-names-divider:empty:before {
-  content: 'Нет даты';
+.heroes-names-list__divider:empty:before {
+  content: "Нет данных";
 }
 
-.heroes-names.below-100 .heroes-names-divider {
+.count-below-100 .heroes-names-list__divider {
   font-size: 0.75rem;
   line-height: 1.5rem;
 }
 
-.heroes-names.below-50 .heroes-names-divider {
+.count-below-50 .heroes-names-list__divider {
   font-size: 0.875rem;
   line-height: 1.75rem;
 }
 
-.heroes-names.below-25 .heroes-names-divider {
+.count-below-25 .heroes-names-list__divider {
   font-size: 1rem;
   line-height: 2rem;
 }
 
-.heroes-names-actions-bar {
-  margin-bottom: 2rem;
+.heroes-names-actions {
+  align-items: center;
 }
 
-.heroes-names-search {
-  width: 20rem;
+.heroes-names-actions__search {
+  flex-grow: 1;
+  margin-right: 5rem;
+  height: 2.5rem !important;
 }
 
-.heroes-names-order {
-  background-color: transparent;
-  border-color: transparent;
-  box-shadow: none;
+.heroes-names-actions__search::placeholder {
+  color: var(--color-app-text-disabled);
 }
 
-.heroes-names-order.active.asc:after {
-  content: " ↑";
+.heroes-names-actions__order-by + .heroes-names-actions__order-by {
+  margin-left: 0.25rem;
 }
 
-.heroes-names-order.active:not(.asc):after {
-  content: " ↓";
+.heroes-names-actions__order-by:after {
+  content: "";
+  width: 0.75rem;
+  text-align: right;
+  display: inline-block;
 }
 
-/* Панели и модальные окна */
-.overlay-wrapper {
+.heroes-names-actions__order-by.active.asc:after {
+  content: "↑";
+}
+
+.heroes-names-actions__order-by.active:not(.asc):after {
+  content: "↓";
+}
+
+.heroes-names-actions .actions__left {
+  margin-left: 0.25rem;
+}
+
+.heroes-names-actions .actions__right {
+  margin-right: -0.5rem;
+}
+
+/* Модальные окна */
+
+body.modal-opened {
+  overflow: hidden;
+}
+
+.modals {
   position: fixed;
+  height: 100vh;
+  overflow: scroll;
   left: 0;
-  width: 100%;
-  bottom: 0;
   top: 0;
-  overflow-y: auto;
+  width: 100%;
   z-index: 100;
-}
-
-.overlay-wrapper:not(.opened) {
+  padding: 1rem;
+  box-sizing: border-box;
   display: none;
 }
 
-.panel-backdrop {
-  position: absolute;
+.modals.opened {
+  display: block;
+}
+
+.modal-backdrop {
+  background-color: var(--color-backdrop-background);
+  position: fixed;
   left: 0;
   top: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #00000055;
+  width: 100vw;
+  height: 100vh;
   z-index: 101;
 }
 
-.panel {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
+.modal {
+  position: relative;
   z-index: 102;
   background-color: var(--color-app-background);
-  box-shadow: 0px 0px 100px 20px #00000088;
-  width: calc(100% - 2rem);
-  max-width: 40rem;
   border-radius: 0.5rem;
-}
-
-.panel-header {
-  padding: 1rem 1rem 0 1rem;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 45rem;
+  max-height: calc(100vh - 2rem);
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  box-shadow: 0px 0px 50px 20px #00000066;
 }
 
-.panel-header h2 {
-  margin: 0;
+.modal-header {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
 }
 
-.panel-footer {
-  padding: 0rem 1rem 1rem 1rem;
+.modal-main {
+  overflow: scroll;
 }
 
-.panel-main {
-  padding: 1rem 1rem 1rem 1rem;
-}
-
-.panel-header button.close {
+.modal-close {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
   font-size: 2rem;
 }
 
-/* Панель героя */
+/* Модальное окно героя */
 
-.hero-panel .panel-header {
-  padding: 2rem;
-  padding-bottom: 0;
-  /*max-width: 45rem;*/
+.modal-hero .modal-header {
+  position: relative;
+  padding-left: 19rem;
+  height: 17rem;
+  flex-basis: 17rem;
+  flex-shrink: 0;
+  border-bottom: solid var(--color-line-light) 1px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.hero-panel .panel-main {
-  padding: 1rem 2rem 2rem 2rem;
+.modal-hero .modal-main {
+  padding: 1rem;
 }
+
+.modal-hero .hero-avatars {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.modal-hero .hero-avatars .hero-avatar:first-child {
+  width: 17rem;
+  height: 17rem;
+  background-size: cover;
+}
+
+.modal-hero .hero-avatar {
+  border-top-left-radius: 0.5rem;
+}
+
+.modal-hero .hero-avatar.tsargrad {
+  background-position: center top;
+}
+
+.modal-hero .hero-name {
+  margin-top: 1rem;
+  margin-bottom: 0.625rem;
+  margin-right: 4.5rem;
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.modal-hero .hero-rank {
+  font-size: 1.25rem;
+}
+
+.modal-hero .hero-awards {
+  margin-top: 0.5rem;
+}
+
+.modal-hero .hero-awards__images {
+  margin-top: 1.5rem;
+}
+
+.modal-hero .hero-awards__names {
+  font-size: 0.75rem;
+}
+
+.modal-hero img.hero-awards__image {
+  mix-blend-mode: multiply;
+  height: 4rem;
+  margin-right: 0.75rem;
+}
+
+
+

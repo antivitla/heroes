@@ -85,6 +85,8 @@ export class HTMLMediaBannerElement extends HTMLElement {
 
   audioPlayerId = 'media-banner-audio-player';
 
+  videoPlayerId = 'media-banner-video-player';
+
   currentAudioSource = '';
 
   // Properties
@@ -184,13 +186,13 @@ export class HTMLMediaBannerElement extends HTMLElement {
     }
   }
 
-  setupMediaVideo (video) {
+  async setupMediaVideo (video) {
     this.cleanup('video'); // initial cleanup
 
-    if (video) {
+    if (video && !this.mediaVideoElement) {
       const t = document.createElement('template');
       t.innerHTML = `
-        <video muted="true" autoplay="" preload>
+        <video id="${this.videoPlayerId}" muted="true" autoplay="">
           <source src="${video}" type="video/${video.split('.').slice(-1)[0]}">
         </video>
         ${this.videoInterlace ? '<div class="interlace"></div>' : ''}
@@ -211,8 +213,12 @@ export class HTMLMediaBannerElement extends HTMLElement {
       }
 
       // autoplay + loop
-      this.mediaVideoElement.play();
-      this.listen('ended', this.mediaVideoElement, () => {
+      try {
+        await this.mediaVideoElement.play();
+      } catch (error) {
+        console.warn('Media-banner playback prevented:', error);
+      }
+      this.listen('ended', this.mediaVideoElement, (event) => {
         this.mediaVideoElement.play();
       }, 'video');
 

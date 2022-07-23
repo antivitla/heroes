@@ -32,6 +32,22 @@ export default {
       });
     },
 
+    getHeroById (id, list = []) {
+      return list.find(hero => {
+        return Object.values(hero.resources)
+          .map(resource => resource.id)
+          .filter(id => id)
+          .includes(id)
+      });
+    },
+
+    hasHeroId (id, hero) {
+      return Object.values(hero.resources)
+        .map(resource => resource.id)
+        .filter(id => id)
+        .includes(id);
+    },
+
     //
     // Extract data
     //
@@ -70,6 +86,10 @@ export default {
         }
       });
       return date;
+    },
+
+    getHeroId (hero) {
+      return Object.values(hero.resources).find(resource => resource.id)?.id;
     }
   }
 }
