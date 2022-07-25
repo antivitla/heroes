@@ -1,4 +1,4 @@
-import heroesMixin from '../mixins/heroes.js';
+import HeroesMixin from '../mixins/heroes.js';
 
 export default {
   template: `
@@ -9,9 +9,11 @@ export default {
         'count-below-100': orderedList.length < 100,
         'count-below-50': orderedList.length < 50,
         'count-below-25': orderedList.length < 25,
+        'additional-fields': foundAdditionalFields
       }"
     >
-      <template
+      <div
+        class="heroes-names-list__item-wrapper"
         v-if="orderedList.length > 0"
         v-for="(hero, index) in orderedList">
         <span
@@ -19,15 +21,22 @@ export default {
           class="heroes-names-list__divider">{{ displayDivider(index) }}</span>
         <a
           class="heroes-names-list__item"
-          v-on:click="onOpenHero(hero)"
-          v-bind:date="getHeroDate(hero)">{{ getHeroName(hero) }}</a>
-      </template>
-      <template v-else>
-        <div class="heroes-names-list__empty">Ничего не найдено...</div>
-      </template>
+          v-on:click="onOpenHero(hero)">
+          <div class="name">{{ getHeroName(hero) }}</div>
+          <div class="found" v-if="hero.found">
+            <div class="rank" v-if="hero.found.rank">{{ hero.rank }}</div>
+            <div class="award" v-if="hero.found.award">{{ hero.awards.join(', ') }}</div>
+            <div class="sex" v-if="hero.found.sex">{{ hero.sex }}</div>
+            <div class="date" v-if="hero.found.date">{{ hero.extended.dateFormatted }}</div>
+            <div class="fallen" v-if="hero.found.fallen">Погиб{{hero.sex === 'женщина' ? 'ла' : '' }}</div>
+            <div class="alive" v-if="hero.found.alive">Жив{{hero.sex === 'женщина' ? 'а' : '' }}</div>
+          </div>
+        </a>
+      </div>
+      <div v-else class="heroes-names-list__empty">Ничего не найдено...</div>
     </div>
   `,
-  mixins: [heroesMixin],
+  mixins: [HeroesMixin],
   inject: ['openModal'],
   props: {
     heroes: {
@@ -42,17 +51,68 @@ export default {
       type: Boolean,
       default: true
     },
-    filterByName: {
+    filterQuery: {
       type: String,
       default: ''
+    },
+  },
+  data () {
+    return {
+      clonedHeroes: [],
+      foundAdditionalFields: false
+    };
+  },
+  watch: {
+    heroes () {
+      this.syncHeroes();
     }
   },
   computed: {
     filteredList () {
-      if (!this.filterByName || this.filterByName.length < 2) {
+      if (!this.filterQuery || this.filterQuery.length < 2) {
+        this.foundAdditionalFields = false;
         return this.heroes;
       } else {
-        return this.heroes.filter(hero => hero.name.match(new RegExp(this.filterByName, 'gi')));
+        this.foundAdditionalFields = false;
+        return this.clonedHeroes.filter(hero => {
+          hero.found = {};
+          // Добавить маркер что именно было найдено к герою
+          const queries = this.filterQuery.split(/\s+/gi)
+            .filter(q => q && q.length > 2)
+            .map(q => new RegExp(q, 'gi'));
+          const foundAll = queries.every(q => {
+            const found = {
+              name: hero.name.match(q),
+              rank: hero.rank.match(q),
+              award: hero.awards.join(', ').match(q),
+              sex: hero.sex.match(q),
+              date: hero.extended.dateFormatted.match(q),
+              fallen: hero.fallen && hero.extended.fallenTags.match(q),
+              alive: !hero.fallen && hero.extended.fallenTags.match(q)
+            };
+            // Глобально маркируем что нашлись доп. поля
+            if (!this.foundAdditionalFields) {
+              const foundAdditionalFields = Object.entries(found).some(entry => {
+                return entry[0] !== 'name' && entry[1];
+              });
+              if (foundAdditionalFields) {
+                this.foundAdditionalFields = true;
+              }
+            }
+            // Добавляем инфу о найденном
+            Object.assign(
+              hero.found,
+              Object.entries(found).reduce((map, entry) => {
+                if (entry[1]) {
+                  map[entry[0]] = true;
+                }
+                return map;
+              }, {})
+            );
+            return Object.values(found).some(value => value);
+          });
+          return foundAll;
+        });
       }
     },
     orderedList () {
@@ -63,7 +123,13 @@ export default {
       );
     }
   },
+  created () {
+    this.syncHeroes();
+  },
   methods: {
+    syncHeroes () {
+      this.clonedHeroes = this.extendCloneHeroes(this.heroes);
+    },
     getHeroName (hero) {
       if (this.orderBy !== 'lastName') {
         return hero.name;
@@ -94,10 +160,17 @@ export default {
       } else if (this.orderBy === 'lastName') {
         divider = this.getHeroLastName(this.orderedList[index]).charAt(0);
       } else if (this.orderBy === 'date') {
-        divider = [
-          '', 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-          'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
-        ][Number(this.getHeroDate(this.orderedList[index])?.split('-')[1] || 0)];
+        const date = this.getHeroDate(this.orderedList[index]);
+        const month = ['', 'Январь', 'Февраль', 'Март', 'Апрель', 'Май',
+          'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+        ][Number(date?.split('-')[1] || 0)];
+        const year = date?.split('-')[0] || '2022';
+        if (!month) {
+          divider = '';
+        } else {
+          // divider = `${month} ${year}`;
+          divider = `${month}`;
+        }
       }
       return divider;
     },

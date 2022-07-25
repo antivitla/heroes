@@ -28,7 +28,7 @@
         <media-banner
           video="assets/video/apachev-very-low.mp4"
           audio="
-            assets/audio/krupnov--i-stay.mp3,
+            assets/audio/krupnov--i-stay-acoustic.mp3,
             assets/audio/smoylov--for-donbass.mp3,
             assets/audio/chicherina-apachev--armata.mp3,
             assets/audio/zlatoustovsky--heroes-of-the-past.mp3,
@@ -156,7 +156,7 @@
             src="assets/audio/kachura-lisovina--donbass-behind-us.mp3"
             href="https://vk.com/search?c[q]=Качура — Донбасс за нами&c[section]=auto">Качура, Лисовина — Донбасс за нами</media-playlist-item>
           <media-playlist-item
-            src="assets/audio/krupnov--i-stay.mp3"
+            src="assets/audio/krupnov--i-stay-acoustic.mp3"
             href="https://vk.com/search?c[q]=Крупнов — Я остаюсь&c[section]=auto">Крупнов — Я остаюсь</media-playlist-item>
           <media-playlist-item src="assets/audio/marshal--i-am-su24.mp3" href="https://vk.com/search?c[q]=Маршал — Я не Шарли, я Су-24&c[section]=auto">Маршал — Я не Шарли, я Су-24</media-playlist-item>
           <media-playlist-item
@@ -284,6 +284,9 @@
         initTextStroke();
         initEmitOnClick();
 
+        // Создать пульт управления шорткатами
+        this.initKeyboardShortcuts();
+
         // Исходный резайз медиа-баннера, если открыта боковая панель
         setTimeout(() => {
           document.dispatchEvent(new CustomEvent('resize-media-banner'));
@@ -298,6 +301,9 @@
           rootMargin: '0px',
           threshold: [0.2, 0.8]
         })).observe(document.querySelector('.app-header'));
+      },
+      beforeUnmount () {
+        this.clearKeyboardShortcuts();
       },
       methods: {
         async fetchHeroes () {
@@ -321,8 +327,8 @@
           this.modals.shift();
         },
         onOpenModal (modal) {
+          // Если в ссылке еще не указано, прописать нашу модалку
           if (modal.is === 'HcModalHero') {
-            // Если в ссылке еще не указано, прописать нашу модалку
             const openHeroById = new URLSearchParams(location.search).get('openHeroById');
             if (!openHeroById || !this.hasHeroId(openHeroById, modal.options.hero)) {
               const id = this.getHeroId(modal.options.hero);
@@ -337,6 +343,17 @@
             const url = new URL(location.href);
             url.searchParams.delete('openHeroById');
             history.pushState('clean', '', url.href)
+          }
+        },
+        initKeyboardShortcuts () {
+          document.addEventListener('keyup', this.keyboardShortcutListener);
+        },
+        clearKeyboardShortcuts () {
+          document.removeEventListener('keyup', this.keyboardShortcutListener)
+        },
+        keyboardShortcutListener (event) {
+          if (event.code === 'Escape' && event.target.classList.contains('modal-opened')) {
+            this.closeModal();
           }
         }
       }

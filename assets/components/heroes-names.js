@@ -15,7 +15,7 @@ export default {
       <hc-heroes-names-list
         class="content full"
         v-bind:heroes="heroes"
-        v-bind:filter-by-name="searchQuery"
+        v-bind:filter-query="searchQuery"
         v-bind:order-by="orderBy"
         v-bind:order-direction="orderDirection"></hc-heroes-names-list>
     </div>

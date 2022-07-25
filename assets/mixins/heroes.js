@@ -1,9 +1,29 @@
+import { clone, formatDate } from '../utils.js';
+
 // Ожидаем в this.heroes список героев
 export default {
-  computed: {
-    //
-  },
   methods: {
+    extendCloneHeroes (list) {
+      const clonedList = clone(list);
+      clonedList.forEach(hero => {
+        const date = this.getHeroDate(hero) || '';
+        const dateFormatted = date ? formatDate(date, 'D MMMM YYYY') : '';
+        const stories = Object.values(hero.resources)
+          .map(resource => resource.story)
+          .filter(story => story);
+        const fallenTags = hero.fallen
+          ? 'погиб умер убит убили смерть посмертно'
+          : 'жив живой выжил'
+        hero.extended = {
+          date,
+          dateFormatted,
+          stories,
+          fallenTags
+        };
+      });
+      return clonedList;
+    },
+
     getHeroesOrderedBy (order, list = [], direction = true) {
       return list.slice().sort((heroA, heroB) => {
         let a, b;
@@ -90,6 +110,26 @@ export default {
 
     getHeroId (hero) {
       return Object.values(hero.resources).find(resource => resource.id)?.id;
+    },
+
+    getHeroStories (hero) {
+      return Object.values(hero.resources)
+        .map(resource => resource.story)
+        .filter(story => story)
+    },
+
+    getCachedHeroData (heroId) {
+      const Heroes = JSON.parse(localStorage.getItem('Heroes') || '{}');
+      return Heroes[heroId];
+    },
+
+    setCachedHeroData (heroId, data) {
+      const Heroes = JSON.parse(localStorage.getItem('Heroes') || '{}');
+      if (!Heroes[heroId]) {
+        Heroes[heroId] = {};
+      }
+      Object.assign(Heroes[heroId] || {}, data);
+      localStorage.setItem('Heroes', JSON.stringify(Heroes));
     }
   }
 }
