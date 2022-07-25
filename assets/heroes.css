@@ -335,9 +335,14 @@ media-playlist-item:not(:last-child) {
   box-sizing: border-box;
 }
 
-.content-fullwidth {
+.content.full {
   padding: 0 2rem;
   box-sizing: border-box;
+  max-width: none;
+}
+
+.content.wider {
+  max-width: 60rem;
 }
 
 /* Шапка */
@@ -563,10 +568,6 @@ media-playlist-item:not(:last-child) {
 
 /* Компоненты: heroes-names */
 
-.heroes-names-actions {
-  margin-bottom: 1.5rem;
-}
-
 .heroes-names-list {
   display: flex;
   flex-wrap: wrap;
@@ -643,6 +644,7 @@ media-playlist-item:not(:last-child) {
   line-height: 1;
   margin: 0.125rem 0.25rem;
   background-color: var(--color-app-background-darker);
+  color: var(--color-app-text-muted);
   padding: 0 0.5rem;
   border-radius: 0.25rem;
   display: flex;
@@ -650,7 +652,7 @@ media-playlist-item:not(:last-child) {
 }
 
 .heroes-names-list__divider:empty:before {
-  content: "Нет данных";
+  content: "Не указано";
 }
 
 .additional-fields .heroes-names-list__divider {
@@ -685,17 +687,23 @@ media-playlist-item:not(:last-child) {
 }
 
 .heroes-names-actions {
+  margin-bottom: 2rem;
+  margin-top: 3rem;
   align-items: center;
 }
 
 .heroes-names-actions__search {
   flex-grow: 1;
-  margin-right: 5rem;
+  margin-right: 2rem;
   height: 2.5rem !important;
 }
 
 .heroes-names-actions__search::placeholder {
   color: var(--color-app-text-disabled);
+}
+
+.heroes-names-actions__order-by {
+  padding: 0 0.125rem;
 }
 
 .heroes-names-actions__order-by + .heroes-names-actions__order-by {
@@ -704,7 +712,7 @@ media-playlist-item:not(:last-child) {
 
 .heroes-names-actions__order-by:after {
   content: "";
-  width: 0.625rem;
+  width: 0.5rem;
   text-align: right;
   display: inline-block;
 }
@@ -718,11 +726,12 @@ media-playlist-item:not(:last-child) {
 }
 
 .heroes-names-actions .actions__left {
-  margin-left: 0.25rem;
+  margin-left: 0rem;
 }
 
 .heroes-names-actions .actions__right {
   margin-right: -0.5rem;
+  text-align: right;
 }
 
 /* Модальные окна */
@@ -884,6 +893,10 @@ body.modal-opened {
   margin-right: 4.5rem;
   font-size: 2.5rem;
   line-height: 1;
+}
+
+.modal-hero .hero-name__fallen {
+  cursor: help;
 }
 
 .modal-hero .hero-rank {

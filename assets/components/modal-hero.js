@@ -9,7 +9,12 @@ export default {
         <hc-hero-avatars
           v-bind:hero="hero"
           v-bind:avatar-key="avatarKey"></hc-hero-avatars>
-        <h2 class="hero-name">{{ hero.name }} <span v-if="hero.fallen" title="Погиб. Вечная память">🔥</span></h2>
+        <h2 class="hero-name">
+          <span>{{ hero.name }}</span>
+          <span
+            v-if="hero.fallen"
+            class="hero-name__fallen"
+            v-bind:title="heroFallenTitle"> 🔥</span></h2>
         <div class="hero-rank">{{ hero.rank }}</div>
         <hc-hero-awards v-bind:hero="hero" v-if="hero.awards.length"></hc-hero-awards>
         <!-- <div class="hero-fallen" v-if="hero.fallen"></div> -->
@@ -90,6 +95,9 @@ export default {
     },
     avatarKey () {
       return this.currentResource?.key;
+    },
+    heroFallenTitle () {
+      return `Погиб${this.hero.sex === 'женщина' ? 'ла' : ''}. Вечная память`
     }
   },
   mounted () {

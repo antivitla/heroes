@@ -3,6 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Герои специальной военной операции на Украине">
+  <meta property="og:description" content="Относительно легкое с интересными статистическими деталями чтение о героях специальной военной операции на Украине. С плейлистом!">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://mr-woodman.ru/heroes/">
+  <meta property="og:image" content="https://mr-woodman.ru/heroes/images/heroes-z.jpg">
   <title>Герои специальной военной операции на Украине</title>
   <link rel="icon" type="image/png" href="assets/images/hero-star.png">
   <link href="assets/heroes.css" rel="stylesheet">
@@ -128,7 +133,7 @@
         type="button"
         data-toggle-container=".app-page"
         data-toggle-class="app-nav_opened"
-        data-emit-on-click="resize-media-banner"
+        data-emit-on-click="resize-media-banner, toggle-app-nav"
         data-emit-on-click-delay="300"></button>
       <section class="app-nav__content">
         <!-- Плейлист -->
@@ -213,13 +218,14 @@
         v-bind:options="modals[0].options"
         v-on:close="closeModal"></component>
     </div>
-
   </div>
 
   <script type="module">
     import initToggle from './assets/toggle.js';
     import initTextStroke from './assets/text-stroke.js';
     import initEmitOnClick from './assets/emit-on-click.js';
+
+    import { getUrlParam, setUrlParam } from './assets/utils.js';
 
     import HeroesMixin from './assets/mixins/heroes.js';
     import HcHeroesNames from './assets/components/heroes-names.js';
@@ -234,7 +240,8 @@
       provide () {
         return {
           openModal: this.openModal,
-          awardsReference: Vue.computed(() => this.awards)
+          awardsReference: Vue.computed(() => this.awards),
+          // ranksReference: Vue.computed(() => this.ranks),
         };
       },
       data () {
@@ -242,6 +249,7 @@
           heroes: [],
           modals: [],
           awards: {},
+          // ranks: {},
         };
       },
       watch: {
@@ -270,40 +278,30 @@
           deep: true
         }
       },
-      computed: {
-        awardsReference () {
-          return this.awards;
-        }
-      },
       async created () {
         await this.fetchHeroes();
         await this.fetchAwards();
+        // await this.fetchRanks();
       },
       mounted () {
         initToggle();
         initTextStroke();
         initEmitOnClick();
-
         // Создать пульт управления шорткатами
         this.initKeyboardShortcuts();
-
-        // Исходный резайз медиа-баннера, если открыта боковая панель
+        // Исходный резайз медиа-баннера, возможно открыта боковая панель
         setTimeout(() => {
           document.dispatchEvent(new CustomEvent('resize-media-banner'));
         }, 300);
-
         // Следим за позицией медиа-баннера, чтоб менять цвет кнопки меню
-        (new IntersectionObserver(([event]) => {
-          document.querySelector('.app-nav__toggle-nav')
-            .classList.toggle('invert', event.isIntersecting)
-        }, {
-          root: document,
-          rootMargin: '0px',
-          threshold: [0.2, 0.8]
-        })).observe(document.querySelector('.app-header'));
+        this.initScrollObserver();
+        // Следим за переключением бокового бара
+        this.initAppNavToggleWatch();
       },
       beforeUnmount () {
         this.clearKeyboardShortcuts();
+        this.clearScrollObserver();
+        this.clearAppNavToggleWatch();
       },
       methods: {
         async fetchHeroes () {
@@ -318,6 +316,11 @@
           this.awards = await fetch(url).then(response => response.json());
           return this.awards;
         },
+        // async fetchRanks () {
+        //   const url = 'https://mr-woodman.ru/references/ranks.json';
+        //   this.ranks = await fetch(url).then(response => response.json());
+        //   return this.ranks;
+        // },
         openModal (modal) {
           this.onOpenModal(modal);
           this.modals.unshift(modal);
@@ -355,6 +358,33 @@
           if (event.code === 'Escape' && event.target.classList.contains('modal-opened')) {
             this.closeModal();
           }
+        },
+        initScrollObserver () {
+          this.scrollObserver = new IntersectionObserver(([event]) => {
+            document.querySelector('.app-nav__toggle-nav')
+              .classList.toggle('invert', event.isIntersecting)
+          }, {
+            root: document,
+            rootMargin: '0px',
+            threshold: [0.2, 0.8]
+          });
+          this.scrollObserver.observe(document.querySelector('.app-header'));
+        },
+        clearScrollObserver () {
+          this.scrollObserver.disconnect();
+        },
+        initAppNavToggleWatch () {
+          document.addEventListener('toggle-app-nav', this.appNavToggleWatcher);
+          const opened = getUrlParam('appNavOpened') === 'true';
+          if (opened) {
+            document.querySelector('.app-nav__toggle-nav').click();
+          }
+        },
+        clearAppNavToggleWatch () {
+          document.removeEventListener('toggle-app-nav', this.appNavToggleWatcher);
+        },
+        appNavToggleWatcher (event) {
+          setUrlParam('appNavOpened', Boolean(document.querySelector('.app-nav_opened')));
         }
       }
     });

@@ -1,4 +1,5 @@
 import HeroesMixin from '../mixins/heroes.js';
+import { capitalizeFirstLetter } from '../utils.js';
 
 export default {
   template: `
@@ -21,6 +22,7 @@ export default {
           class="heroes-names-list__divider">{{ displayDivider(index) }}</span>
         <a
           class="heroes-names-list__item"
+          v-bind:title="'Открыть в модальном окне'"
           v-on:click="onOpenHero(hero)">
           <div class="name">{{ getHeroName(hero) }}</div>
           <div class="found" v-if="hero.found">
@@ -149,6 +151,15 @@ export default {
       } else if (this.orderBy === 'date') {
         cur = this.getHeroDate(this.orderedList[index])?.split('-')[1];
         prev = index && this.getHeroDate(this.orderedList[index - 1])?.split('-')[1];
+      } else if (this.orderBy === 'rank') {
+        cur = this.orderedList[index].rank;
+        prev = index && this.orderedList[index - 1].rank;
+      } else if (this.orderBy === 'awards') {
+        cur = this.orderedList[index].awards.slice(0).sort().join(', ');
+        prev = index && this.orderedList[index - 1].awards.slice(0).sort().join(', ');
+      } else if (this.orderBy === 'sex') {
+        cur = this.orderedList[index].sex;
+        prev = index && this.orderedList[index - 1].sex;
       }
       return !index || cur !== prev;
     },
@@ -171,6 +182,12 @@ export default {
           // divider = `${month} ${year}`;
           divider = `${month}`;
         }
+      } else if (this.orderBy === 'rank') {
+        divider = this.orderedList[index].rank;
+      } else if (this.orderBy === 'awards') {
+        divider = this.orderedList[index].awards.slice(0).sort().join(', ');
+      } else if (this.orderBy === 'sex') {
+        divider = capitalizeFirstLetter(this.orderedList[index].sex);
       }
       return divider;
     },

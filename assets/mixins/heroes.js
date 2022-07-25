@@ -1,4 +1,5 @@
 import { clone, formatDate } from '../utils.js';
+import Ranks from '../lib/ranks.js';
 
 // Ожидаем в this.heroes список героев
 export default {
@@ -40,12 +41,60 @@ export default {
             a = this.getHeroDate(heroA);
             b = this.getHeroDate(heroB);
             break;
+          case 'awards':
+            a = heroA.awards.slice(0).sort().join(', ');
+            b = heroB.awards.slice(0).sort().join(', ');
+            break;
+          case 'sex':
+            a = heroA.sex;
+            b = heroB.sex;
+            break;
+          case 'rank':
+            a = this.getHeroRankLevel(heroA);
+            b = this.getHeroRankLevel(heroB);
+            // Разбросать надо — уровень вроде тот же, но названия разные
+            if (a === b) {
+              // A
+              if (Ranks[heroA.rank]?.type) {
+                a += 0.1
+              }
+              else if (Ranks[heroA.rank]?.land && heroA.rank.match(/[Гг]вард/i)) {
+                a += 0.3
+              }
+              else if (Ranks[heroA.rank]?.land) {
+                a += 0.2
+              }
+              else if (Ranks[heroA.rank]?.naval && heroA.rank.match(/[Гг]вард/i)) {
+                a += 0.5
+              }
+              else if (Ranks[heroA.rank]?.naval) {
+                a += 0.4
+              }
+
+              // B
+              if (Ranks[heroB.rank]?.type) {
+                b += 0.1
+              }
+              else if (Ranks[heroB.rank]?.land && heroB.rank.match(/[Гг]вард/i)) {
+                b += 0.3
+              }
+              else if (Ranks[heroB.rank]?.land) {
+                b += 0.2
+              }
+              else if (Ranks[heroB.rank]?.naval && heroB.rank.match(/[Гг]вард/i)) {
+                b += 0.5
+              }
+              else if (Ranks[heroB.rank]?.naval) {
+                b += 0.4
+              }
+            }
+            break;
         }
         const dir = direction ? 1 : -1;
-        if (!a) {
+        if (!a && a !== 0) {
           return dir;
         }
-        if (!b) {
+        if (!b && b !== 0) {
           return -dir;
         }
         return (a > b ? 1 : a < b ? -1 : 0) * (direction ? 1 : -1);
@@ -117,6 +166,12 @@ export default {
         .map(resource => resource.story)
         .filter(story => story)
     },
+
+    getHeroRankLevel (hero) {
+      return Ranks[hero.rank]?.level || 0;
+    },
+
+    // Кэш
 
     getCachedHeroData (heroId) {
       const Heroes = JSON.parse(localStorage.getItem('Heroes') || '{}');

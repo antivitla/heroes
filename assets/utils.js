@@ -49,6 +49,26 @@ export function formatDate (date, format = 'YYYY-MM-DD') {
   }
 }
 
+export function setCachedData (key, dataObject) {
+  const data = JSON.parse(localStorage.getItem(key) || '{}');
+  Object.assign(data, dataObject);
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+export function getCachedData (key) {
+  return JSON.parse(localStorage.getItem(key) || '{}');
+}
+
+export function setUrlParam (param, value, replace) {
+  const url = new URL(location.href);
+  url.searchParams.set(param, value);
+  history[`${replace ? 'replace' : 'push'}State`]({ [param]: value }, '', url.href);
+}
+
+export function getUrlParam (param) {
+  return new URL(location.href).searchParams.get(param);
+}
+
 // export function listMapEntryByKey (list, key) {
 //   return list.map((item, index) => ({ index, key, value: item[key] }));
 // }
@@ -96,14 +116,13 @@ export function formatDate (date, format = 'YYYY-MM-DD') {
 //   return templateElement.content;
 // }
 
-
-// export function capitalizeFirstLetter(string) {
-//   if (!string) {
-//     console.log('no string', string);
-//     return '';
-//   }
-//   return string.charAt(0).toUpperCase() + string.slice(1);
-// }
+export function capitalizeFirstLetter(string) {
+  if (!string) {
+    console.log('no string', string);
+    return '';
+  }
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 // export function removeDuplicates (array) {
 //   return Array.from(array.reduce((map, item) => {
