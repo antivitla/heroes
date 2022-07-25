@@ -703,7 +703,7 @@ media-playlist-item:not(:last-child) {
 }
 
 .heroes-names-actions__order-by {
-  padding: 0 0.125rem;
+  padding: 0 0.25rem;
 }
 
 .heroes-names-actions__order-by + .heroes-names-actions__order-by {
@@ -712,7 +712,7 @@ media-playlist-item:not(:last-child) {
 
 .heroes-names-actions__order-by:after {
   content: "";
-  width: 0.5rem;
+  width: 0.625rem;
   text-align: right;
   display: inline-block;
 }
