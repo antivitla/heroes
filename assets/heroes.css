@@ -1,5 +1,6 @@
 @import url("fonts/leksa.css");
 @import url("fonts/maecenas.css");
+@import url("fonts/ibmplexsans.css");
 
 @keyframes spin {
   0% {
@@ -28,6 +29,7 @@ html {
   --color-app-text-invert: #d0cfcade;
   --color-app-text-invert-muted: #d0cfca99;
   --color-app-text-invert-solid: #d0cfca;
+  --color-app-text-invert-highlighted: #e2e2df;
 
   --color-backdrop-background: #4f4f4c99;
 
@@ -74,6 +76,12 @@ a {
 
 h1, h2, h3, h4, h5 {
   font-family: var(--font-family-header);
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1.25em;
+  line-height: 1;
 }
 
 input[type="text"],
@@ -179,6 +187,78 @@ button,
   margin-left: 0.125rem;
 }
 
+.hidden {
+  display: none;
+}
+
+
+.actions {
+  display: flex;
+}
+
+.actions__right {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+media-playlist {
+  padding-left: 1rem;
+  margin-left: -1rem;
+}
+
+media-playlist-item {
+  padding: 0.25rem 0;
+  --font-size-media-playlist-item-label: small;
+  --font-size-media-playlist-item-play-icon: 1rem;
+  --color-media-playlist-item-link: var(--color-app-text-invert);
+}
+
+media-playlist-item:not(:last-child) {
+  border-bottom: solid 1px #ffffff22;
+}
+
+.text-right {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Font magic */
+
+.font-preload {
+  visibility: hidden;
+  position: fixed;
+  left: -100vh;
+  top: -100vh;
+  pointer-events: none;
+}
+
+.font-preload.ibmplexsans {
+  font-family: "IBM Plex Sans";
+}
+
+.font-preload.ibmplexsans .light {
+  font-weight: 300;
+}
+
+.font-preload.ibmplexsans .normal {
+  font-weight: 400;
+}
+
+.font-preload.ibmplexsans .medium {
+  font-weight: 500;
+}
+
+.font-preload.ibmplexsans .semibold {
+  font-weight: 600;
+}
+
 /* Диагонали */
 
 .diagonal_top,
@@ -254,31 +334,6 @@ button,
   }
 }
 
-.actions {
-  display: flex;
-}
-
-.actions__right {
-  margin-right: 0;
-  margin-left: auto;
-}
-
-media-playlist {
-  padding-left: 1rem;
-  margin-left: -1rem;
-}
-
-media-playlist-item {
-  padding: 0.25rem 0;
-  --font-size-media-playlist-item-label: small;
-  --font-size-media-playlist-item-play-icon: 1rem;
-  --color-media-playlist-item-link: var(--color-app-text-invert);
-}
-
-media-playlist-item:not(:last-child) {
-  border-bottom: solid 1px #ffffff22;
-}
-
 /* Композиция */
 
 .app-page {
@@ -343,6 +398,10 @@ media-playlist-item:not(:last-child) {
 
 .content.wider {
   max-width: 60rem;
+}
+
+.content-section + .content-section {
+  margin-top: 7rem;
 }
 
 /* Шапка */
@@ -687,14 +746,25 @@ media-playlist-item:not(:last-child) {
 }
 
 .heroes-names-actions {
-  margin-bottom: 2rem;
-  margin-top: 3rem;
+  margin-bottom: 3rem;
   align-items: center;
 }
 
-.heroes-names-actions__search {
+.heroes-names-actions .actions-left {
+  position: relative;
   flex-grow: 1;
   margin-right: 2rem;
+}
+
+.heroes-names-actions .actions-left .content-component__note {
+  position: absolute;
+  top: 3rem;
+  left: 0;
+  margin: 0;
+}
+
+.heroes-names-actions__search {
+  width: 100%;
   height: 2.5rem !important;
 }
 
@@ -1058,4 +1128,31 @@ body.modal-opened {
 .modal-hero .hero-story-content h2,
 .modal-hero .hero-story-content h3 {
   text-align: center;
+}
+
+/* Компоненты */
+
+.content-component {
+  margin: 3rem auto;
+}
+
+.content-component__note {
+  margin: 0.5rem auto;
+  text-align: right;
+  font-size: small;
+  font-style: italic;
+  color: var(--color-app-text-muted);
+}
+
+.content-component__chart canvas {
+  display: block;
+  margin: 0 auto;
+}
+
+.content-component__chart {
+  margin: 2rem auto;
+}
+
+.content-component__note + .content-component__chart {
+  margin-top: 0;
 }

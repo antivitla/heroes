@@ -7,12 +7,12 @@
 //   mdash: '—'
 // };
 
-// const DebounceRegistry = new Map();
+const DebounceRegistry = new Map();
 
-// export function debounce (func, delayMs = 300) {
-//   clearTimeout(DebounceRegistry.get(func));
-//   DebounceRegistry.set(func, setTimeout(func, delayMs));
-// }
+export function debounce (func, delayMs = 300) {
+  clearTimeout(DebounceRegistry.get(func));
+  DebounceRegistry.set(func, setTimeout(func, delayMs));
+}
 
 // export function random(min, max) {
 //   return min + Math.round(Math.random() * (max - min));

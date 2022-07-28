@@ -1,11 +1,14 @@
 export default {
   template: `
     <div class="heroes-names-actions actions">
-      <input
-        type="search"
-        class="heroes-names-actions__search actions__left"
-        v-model="inputSearchValue"
-        placeholder="Найти героев">
+      <div class="actions-left">
+        <input
+          type="search"
+          class="heroes-names-actions__search actions__left"
+          v-model="inputSearchValue"
+          placeholder="Найти героев">
+        <p class="content-component__note">Поддерживается RegExp</p>
+      </div>
       <div class="actions__right">
         <button
           class="heroes-names-actions__order-by action action_text"

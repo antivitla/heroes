@@ -12,11 +12,11 @@
   <link rel="icon" type="image/png" href="assets/images/hero-star.png">
   <link href="assets/heroes.css" rel="stylesheet">
   <script src="assets/mr-fontfit.js"></script>
-  <!-- <script src="assets/media-banner.js"></script> -->
   <script src="assets/media-banner.js" type="module"></script>
   <script src="assets/random-content.js" type="module"></script>
   <script src="assets/media-playlist.js" type="module"></script>
   <script src="assets/lib/vue3.js"></script>
+  <script src="assets/lib/g2.min.js"></script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GK7YBXYWYF"></script>
   <script>
@@ -33,7 +33,6 @@
         <media-banner
           video="assets/video/apachev-very-low.mp4"
           audio="
-
             assets/audio/apachev--do-not-follow-me.mp3,
             assets/audio/apachev--ukraine-dnr.mp3,
             assets/audio/vysotsky--ballad-for-fight.mp3,
@@ -81,10 +80,23 @@
       </section>
 
       <!-- Список всех героев с поиском -->
-      <section id="heroes-names">
+      <section id="heroes-names" class="content-section">
         <div v-if="!heroes.length" class="content loader_icon loader_text"></div>
         <hc-heroes-names v-else v-bind:heroes="heroes"></hc-heroes-names>
       </section>
+
+      <!-- Самые распространенные имена-->
+      <section id="top-common-names" class="content-section content">
+        <h2>Топ-10 самых распространенных имен</h2>
+        <p>Чем больше накапливается героев, тем точнее их статистика повторяет общероссийскую. И кто бы мог подумать (кроме работников ЗАГСов), типичный русский — вовсе не Ваня, а <em>Саша.</em> Три архитипических былинных богатыря этой специальной военной операции это Саня, Серёга и Лёха.</p>
+        <hc-top-common-names v-bind:heroes="heroes"></hc-top-common-names>
+      </section>
+
+      <!-- А что женщины?
+      <section id="women-heroes" class="content-section content">
+        <h2>А что женщины?</h2>
+        <p>— А что они?</p>
+      </section> -->
 
       <!-- Прокладка над подвал с диагональю -->
       <section class="diagonal_bottom">
@@ -240,6 +252,13 @@
     </div>
   </div>
 
+  <div class="font-preload ibmplexsans">
+    <span class="semibold">Bold</span>
+    <span class="medium">Medium</span>
+    <span class="normal">Normal</span>
+    <span class="light">Light</span>
+  </div>
+
   <script type="module">
     import initToggle from './assets/toggle.js';
     import initTextStroke from './assets/text-stroke.js';
@@ -250,18 +269,19 @@
     import HeroesMixin from './assets/mixins/heroes.js';
     import HcHeroesNames from './assets/components/heroes-names.js';
     import HcModalHero from './assets/components/modal-hero.js';
+    import HcTopCommonNames from './assets/components/top-common-names.js';
 
     const app = Vue.createApp({
       components: {
         HcHeroesNames,
-        HcModalHero
+        HcModalHero,
+        HcTopCommonNames,
       },
       mixins: [HeroesMixin],
       provide () {
         return {
           openModal: this.openModal,
           awardsReference: Vue.computed(() => this.awards),
-          // ranksReference: Vue.computed(() => this.ranks),
         };
       },
       data () {
@@ -405,7 +425,7 @@
         },
         appNavToggleWatcher (event) {
           setUrlParam('appNavOpened', Boolean(document.querySelector('.app-nav_opened')));
-        }
+        },
       }
     });
     // Конфигурация
